@@ -32,7 +32,7 @@ const MainContent = () => {
       <Content
         theme="light"
         style={{
-          padding: "10px 20px",
+          padding: "15px 20px",
           height: "Calc(100vh - 64px)",
         }}
       >
@@ -48,7 +48,6 @@ const MainContent = () => {
               );
             return (
               <Breadcrumb.Item key={index}>
-                {/* {name} */}
                 <Link to={data.path}>{name}</Link>
               </Breadcrumb.Item>
             );
