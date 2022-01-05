@@ -1,0 +1,19 @@
+.layout {
+  height: 100vh;
+}
+.header {
+  padding: 0 30px;
+}
+.header div {
+  color: aliceblue;
+}
+.sidebar {
+  overflow: auto;
+  height: 100vh;
+  position: 'fixed';
+  left: 0
+}
+.trigger{
+  color: white;
+  font-size: 20px;
+}
