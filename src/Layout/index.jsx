@@ -7,7 +7,7 @@ import "./layout.css";
 import SideMenu from "./SideMenu";
 import { Header } from "antd/lib/layout/layout";
 
-const MainLayout = ({ children }) => {
+const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const toggleSidebar = () => {
     setCollapsed(!collapsed);

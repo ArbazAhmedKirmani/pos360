@@ -5,7 +5,7 @@ const HeaderBar = () => {
   return (
     <div style={{ display: "flex" }}>
       <div>
-        <img src={whiteLogo} alt="logo" />
+        <img src={whiteLogo} alt="logo" style={{ height: 50, width: "auto" }} />
       </div>
     </div>
   );

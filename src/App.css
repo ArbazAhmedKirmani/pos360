@@ -10,3 +10,20 @@
   align-items:center;
   margin-bottom: 15px;
 }
+button {
+  border-radius: 0 !important;
+}
+.ant-btn-secondary {
+  background: #0d5193;
+  border-color: #0d5193;
+  color: aliceblue;
+}
+.ant-btn-secondary:hover, .ant-btn-secondary:active, .ant-btn-secondary:focus {
+  background: #0f68c0;
+  border-color: #0f68c0;
+  color: white;
+}
+.ant-btn-primary {
+  background: #187fe1;
+  border-color: #187fe1;
+}
