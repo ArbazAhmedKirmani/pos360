@@ -12,17 +12,14 @@ const MainContent = () => {
   let location;
   useEffect(() => {
     location = window.location.pathname.split("/");
-    console.log(location);
     let array = [];
     let reminder = "";
     location.forEach((loc, index) => {
-      console.log("loc: ", loc);
       array.push({
         name: transformMethod.capitalizeFirstLetter(loc).toString(),
         path: reminder + `${loc}/`,
       });
       reminder = `${loc}/`;
-      console.log(array);
       setBreadcrumbs(array);
     });
   }, []);
@@ -33,7 +30,7 @@ const MainContent = () => {
         theme="light"
         style={{
           padding: "15px 20px",
-          height: "Calc(100vh - 64px)",
+          height: "Calc(100vh - 112px)",
         }}
       >
         <Breadcrumb separator=">">
