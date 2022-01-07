@@ -5,7 +5,6 @@ import "./tableView.css";
 import PropTypes, { object } from "prop-types";
 import FormMethods from "../../../Functions/ComponentFunctions/FormMethods";
 import CreateUpdateForm from "./CreateUpdateForm";
-import FormInput from "../FormFields/FormInput";
 
 /**
  * This Component render the main window of page with a table view and Create / Update Form
@@ -27,6 +26,8 @@ const TableView = (props) => {
     additionalSpace, // Space before Table and after Create Button
     createForm, // Creation Form
     updateForm, // Updation Form
+    bulkForm, // Bulk Creation Form
+    tableSize, // Size of the table
   } = props;
 
   const formMethod = new FormMethods();
@@ -76,23 +77,27 @@ const TableView = (props) => {
     console.log(searchFields);
   };
 
+  const onBulkSubmit = () => {};
+
   return (
     <Fragment>
-      <Row style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
-        {searchSpace}
-        {searchSpace && (
-          <Col span={2} className="input">
-            <Button
-              type="primary"
-              size="large"
-              icon={<SearchOutlined />}
-              onClick={() => searchFunction()}
-            >
-              Search
-            </Button>
-          </Col>
-        )}
-      </Row>
+      <form onChange={handleSearchFields}>
+        <Row style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
+          {searchSpace}
+          {searchSpace && (
+            <Col span={2} className="input">
+              <Button
+                type="primary"
+                size="large"
+                icon={<SearchOutlined />}
+                onClick={() => searchFunction()}
+              >
+                Search
+              </Button>
+            </Col>
+          )}
+        </Row>
+      </form>
       <div style={{ display: "flex" }}>{children}</div>
       <div style={{ display: "flex", justifyContent: "flex-start" }}>
         <div style={{ display: "flex", flex: 1, justifyContent: "flex-start" }}>
@@ -126,7 +131,7 @@ const TableView = (props) => {
       <div style={{ display: "flex" }}>{additionalSpace}</div>
 
       {/* Data Table */}
-      <Table columns={columnList} dataSource={rows} size="default" />
+      <Table columns={columnList} dataSource={rows} size={tableSize} />
 
       {/* Footer Component to be rendered here... */}
       {footerComponent}
@@ -141,6 +146,17 @@ const TableView = (props) => {
         onSubmit={onSubmit}
       >
         {updating ? updateForm : createForm}
+      </CreateUpdateForm>
+
+      {/* Create Update Form */}
+      <CreateUpdateForm
+        placement="bottom"
+        onClose={toggleBulkDrawer}
+        visible={bulkVisible}
+        width="30vh"
+        onSubmit={onBulkSubmit}
+      >
+        {bulkForm}
       </CreateUpdateForm>
     </Fragment>
   );
@@ -158,6 +174,8 @@ TableView.propTypes = {
   searchSpace: PropTypes.element,
   searchFunction: PropTypes.func,
   additionalSpace: PropTypes.element,
+  bulkForm: PropTypes.element,
+  tableSize: PropTypes.string,
 };
 
 export default TableView;

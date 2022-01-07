@@ -1,4 +1,4 @@
-import { Input, Tag } from "antd";
+import { Tag } from "antd";
 import React, { Fragment, useEffect, useState } from "react";
 import FormInput from "../../../Components/GenericComponents/FormFields/FormInput";
 import TableView from "../../../Components/GenericComponents/TableView";
@@ -61,6 +61,31 @@ const Users = () => {
     console.log(record, " : ", index);
   };
 
+  const SearchComponent = () => {
+    return (
+      <Fragment>
+        <FormInput
+          span={4}
+          label="Full Name"
+          name="fullname"
+          size="large"
+          placeholder="John Smith"
+          // value={searchFields}
+          // onChange={handleSearchFields}
+        />
+        <FormInput
+          span={4}
+          label="Email"
+          name="email"
+          size="large"
+          placeholder="abc@abc.com"
+          // value={searchFields}
+          // onChange={handleSearchFields}
+        />
+      </Fragment>
+    );
+  };
+
   const editRow = (record, index) => {
     console.log(record, " : ", index);
   };
@@ -72,28 +97,7 @@ const Users = () => {
         deleteRowFunction={deleteRow}
         editRowFunction={editRow}
         bulkCreate={true}
-        searchSpace={
-          <Fragment>
-            <FormInput
-              span={6}
-              label="Full Name"
-              name="fullname"
-              size="large"
-              placeholder="John Smith"
-              // value={searchFields}
-              // onChange={handleSearchFields}
-            />
-            <FormInput
-              span={6}
-              label="Email"
-              name="email"
-              size="large"
-              placeholder="abc@abc.com"
-              // value={searchFields}
-              // onChange={handleSearchFields}
-            />
-          </Fragment>
-        }
+        searchSpace={<SearchComponent />}
       />
     </div>
   );
