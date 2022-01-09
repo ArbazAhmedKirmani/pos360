@@ -25,7 +25,9 @@ const SideMenu = ({ collapsed }) => {
           <Menu.Item key="3">
             <NavLink to="/setup/users">Users</NavLink>
           </Menu.Item>
-          <Menu.Item key="4">Option 4</Menu.Item>
+          <Menu.Item key="4">
+            <NavLink to="/setup/roles">Roles</NavLink>
+          </Menu.Item>
           <SubMenu key="sub1-2" title="Submenu">
             <Menu.Item key="5">Option 5</Menu.Item>
             <Menu.Item key="6">Option 6</Menu.Item>

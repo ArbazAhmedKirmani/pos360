@@ -1,5 +1,5 @@
-import { Col, Input } from "antd";
 import React from "react";
+import { Col, Input } from "antd";
 import PropTypes from "prop-types";
 
 /**
@@ -23,13 +23,14 @@ const FormInput = (props) => {
 
   return (
     <Col
+      xxl={span}
       xl={span}
-      lg={span}
-      md={span * 0.75}
-      sm={span / 2}
+      lg={span + span * 0.75}
+      md={span + span * 0.75}
+      sm={span + span / 2}
       style={{ padding: 3 }}
     >
-      <span>{label}</span>
+      <span style={{ padding: "0 2px" }}>{label}</span>
       <Input
         className={className}
         name={name}

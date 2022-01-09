@@ -28,6 +28,11 @@ const TableView = (props) => {
     updateForm, // Updation Form
     bulkForm, // Bulk Creation Form
     tableSize, // Size of the table
+    tableLoading, // loading state of Table
+    createUpdateDrawerWidth, // Drawer width of Create/Update Form
+    bulkCreateDrawerWidth, // Drawer width for Bulk Create Form
+    onCreateSubmit, // Create Form Submit Function
+    onUpdateSubmit, // Update Form Submit Function
   } = props;
 
   const formMethod = new FormMethods();
@@ -75,6 +80,11 @@ const TableView = (props) => {
 
   const onSubmit = () => {
     console.log(searchFields);
+    if (updating) {
+      onUpdateSubmit();
+    } else {
+      onCreateSubmit();
+    }
   };
 
   const onBulkSubmit = () => {};
@@ -82,13 +92,23 @@ const TableView = (props) => {
   return (
     <Fragment>
       <form onChange={handleSearchFields}>
-        <Row style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
-          {searchSpace}
+        <Row
+          style={{
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
+            borderBottom: "0.5px solid #f1f1f1",
+            paddingBottom: 10,
+          }}
+        >
+          <Col xxl={22} xl={21} lg={20}>
+            <Row style={{ flexDirection: "row-reverse" }}>{searchSpace}</Row>
+          </Col>
           {searchSpace && (
-            <Col span={2} className="input">
+            <Col xxl={2} xl={3} lg={4} className="input">
               <Button
                 type="primary"
                 size="large"
+                style={{ width: "100%" }}
                 icon={<SearchOutlined />}
                 onClick={() => searchFunction()}
               >
@@ -116,7 +136,7 @@ const TableView = (props) => {
               type="secondary"
               size="large"
               icon={<FormOutlined />}
-              onClick={() => toggleBulkDrawer}
+              onClick={toggleBulkDrawer}
             >
               Bulk Create
             </Button>
@@ -131,7 +151,19 @@ const TableView = (props) => {
       <div style={{ display: "flex" }}>{additionalSpace}</div>
 
       {/* Data Table */}
-      <Table columns={columnList} dataSource={rows} size={tableSize} />
+      <Table
+        columns={columnList}
+        dataSource={rows}
+        size={tableSize}
+        loading={tableLoading}
+        pagination={{
+          pageSize: 20,
+          showTotal: (total, range) =>
+            `${range[0]}-${range[1]} of ${total} items`,
+          defaultPageSize: 20,
+          responsive: ["xxl", "xl", "lg", "md"],
+        }}
+      />
 
       {/* Footer Component to be rendered here... */}
       {footerComponent}
@@ -142,7 +174,7 @@ const TableView = (props) => {
         placement="right"
         onClose={toggleDrawer}
         visible={visible}
-        width="30vw"
+        width={createUpdateDrawerWidth}
         onSubmit={onSubmit}
       >
         {updating ? updateForm : createForm}
@@ -153,7 +185,7 @@ const TableView = (props) => {
         placement="bottom"
         onClose={toggleBulkDrawer}
         visible={bulkVisible}
-        width="30vh"
+        height={bulkCreateDrawerWidth}
         onSubmit={onBulkSubmit}
       >
         {bulkForm}
@@ -176,6 +208,9 @@ TableView.propTypes = {
   additionalSpace: PropTypes.element,
   bulkForm: PropTypes.element,
   tableSize: PropTypes.string,
+  tableLoading: PropTypes.bool,
+  createUpdateDrawerWidth: PropTypes.string,
+  bulkCreateDrawerWidth: PropTypes.string,
 };
 
 export default TableView;
