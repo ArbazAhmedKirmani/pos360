@@ -1,7 +1,9 @@
 import { Tag } from "antd";
 import React, { Fragment, useEffect, useState } from "react";
 import FormInput from "../../../Components/GenericComponents/FormFields/FormInput";
+import FormSelect from "../../../Components/GenericComponents/FormFields/FormSelect";
 import TableView from "../../../Components/GenericComponents/TableView";
+import FormMethods from "../../../Functions/ComponentFunctions/FormMethods";
 
 const columnNames = [
   {
@@ -38,12 +40,14 @@ const columnNames = [
 ];
 
 const Users = () => {
+  const formMethods = new FormMethods();
   const [dataRows, setDataRows] = useState([]);
+  const [statusList, setStatusList] = useState([]);
 
   useEffect(async () => {
     function getRecords() {
-      setDataRows([
-        ...[
+      setDataRows(
+        formMethods.getKeysAttached([
           {
             fullName: "Syed Arbaz Ahmed Kirmani",
             username: "admin",
@@ -51,10 +55,19 @@ const Users = () => {
             isActive: true,
             roleRef: { roleName: "Super Administrator" },
           },
-        ],
-      ]);
+        ])
+      );
     }
     getRecords();
+    let statusList = formMethods.getSelectArrayList(
+      [
+        { userID: "1", userName: "Active" },
+        { userID: "2", userName: "In Active" },
+      ],
+      "userID",
+      "userName"
+    );
+    setStatusList([...statusList]);
   }, []);
 
   const deleteRow = (record, index) => {
@@ -64,14 +77,12 @@ const Users = () => {
   const SearchComponent = () => {
     return (
       <Fragment>
-        <FormInput
-          span={4}
-          label="Full Name"
-          name="fullname"
+        <FormSelect
+          label="Status"
+          span={3}
+          placeholder="Select Status"
+          listArray={statusList}
           size="large"
-          placeholder="John Smith"
-          // value={searchFields}
-          // onChange={handleSearchFields}
         />
         <FormInput
           span={4}
@@ -79,6 +90,16 @@ const Users = () => {
           name="email"
           size="large"
           placeholder="abc@abc.com"
+          type="email"
+          // value={searchFields}
+          // onChange={handleSearchFields}
+        />
+        <FormInput
+          span={4}
+          label="Full Name"
+          name="fullname"
+          size="large"
+          placeholder="John Smith"
           // value={searchFields}
           // onChange={handleSearchFields}
         />
@@ -97,6 +118,8 @@ const Users = () => {
         deleteRowFunction={deleteRow}
         editRowFunction={editRow}
         bulkCreate={true}
+        createUpdateDrawerWidth="40vw"
+        bulkCreateDrawerWidth="60vh"
         searchSpace={<SearchComponent />}
       />
     </div>

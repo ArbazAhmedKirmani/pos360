@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Popconfirm, Space } from "antd";
 import { Fragment } from "react";
 import { DeleteOutlined, EditFilled } from "@ant-design/icons";
@@ -9,17 +9,12 @@ export default class FormMethods {
    * @param {{}[]} columnList list of column to be displayed
    * @param {Function} editFunction list of column to be displayed
    * @param {Function} deleteFunction list of column to be displayed
-   * @param {Function} cancelDeleteFunction list of column to be displayed
    * @returns Array of object to be passed for table columns
    */
-  getTableColumnWithSorting = (
-    columnList,
-    editFunction,
-    deleteFunction,
-    cancelDeleteFunction
-  ) => {
+  //  * @param {Function} cancelDeleteFunction list of column to be displayed
+  getTableColumnWithSorting = (columnList, editFunction, deleteFunction) => {
     let array = columnList;
-    let isDelete = false;
+    // let isDelete = false;
     let data = {};
     if (
       array &&
@@ -31,26 +26,12 @@ export default class FormMethods {
         dataIndex: "action",
         key: "xyz",
         render: (record, index) => (
-          <Fragment>
-            <Space size="large">
-              <a onClick={() => editFunction(record, index)}>
-                <EditFilled style={{ fontSize: 16 }} />
-              </a>
-              <Popconfirm
-                title="Are you sure to delete this Row?"
-                onConfirm={() => deleteFunction(record, index)}
-                onCancel={cancelDeleteFunction}
-                okText="Yes"
-                cancelText="No"
-                placement="topRight"
-                visible={isDelete}
-              >
-                <a>
-                  <DeleteOutlined style={{ fontSize: 16 }} />
-                </a>
-              </Popconfirm>
-            </Space>
-          </Fragment>
+          <TableLastItem
+            deleteFunction={deleteFunction}
+            editFunction={editFunction}
+            record={record}
+            index={index}
+          />
         ),
       };
       array.push(data);
@@ -69,11 +50,50 @@ export default class FormMethods {
     let arr = [];
     if (typeof array[1] !== "object") return;
     array &&
-      array.lenght &&
-      array.foreach((object) => {
+      array.length &&
+      array.forEach((object) => {
         let obj = { id: object[keyID], name: object[keyName] };
         arr.push(obj);
       });
     return arr;
   };
+
+  getKeysAttached = (array) => {
+    let arr = [];
+    array.forEach((item, index) => {
+      item.key = index;
+      arr.push(item);
+    });
+    return arr;
+  };
 }
+
+const TableLastItem = (props) => {
+  let { editFunction, deleteFunction, record, index } = props;
+  const [isDelete, setIsDelete] = useState(false);
+  const toggleDelete = () => {
+    setIsDelete(!isDelete);
+  };
+  return (
+    <Fragment>
+      <Space size="large">
+        <a onClick={() => editFunction(record, index)}>
+          <EditFilled style={{ fontSize: 16 }} />
+        </a>
+        <Popconfirm
+          title="Are you sure to delete this Row?"
+          onConfirm={() => deleteFunction(record, index)}
+          onCancel={toggleDelete}
+          okText="Yes"
+          cancelText="No"
+          placement="topRight"
+          visible={isDelete}
+        >
+          <a onClick={toggleDelete}>
+            <DeleteOutlined style={{ fontSize: 16 }} />
+          </a>
+        </Popconfirm>
+      </Space>
+    </Fragment>
+  );
+};

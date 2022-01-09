@@ -1,6 +1,5 @@
-import React, { createElement, useState } from "react";
+import React, { useState } from "react";
 import { Layout } from "antd";
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import HeaderBar from "./HeaderBar";
 import MainContent from "./MainContent";
 import "./layout.css";
@@ -15,11 +14,7 @@ const MainLayout = () => {
   return (
     <Layout className="layout">
       <Header className="header site-layout-background">
-        {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-          className: "trigger",
-          onClick: toggleSidebar,
-        })}
-        <HeaderBar setCollapsed={setCollapsed} toggleSidebar={toggleSidebar} />
+        <HeaderBar collapsed={collapsed} toggleSidebar={toggleSidebar} />
       </Header>
       <Layout>
         <SideMenu collapsed={collapsed} />

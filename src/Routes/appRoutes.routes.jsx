@@ -5,6 +5,7 @@ import Login from "../Pages/Authentication/Login";
 import Dashboard from "../Pages/Dashboard";
 import NotFound404 from "../Pages/Errors/NotFound404";
 import Screen from "../Pages/PointOfSale/Screen";
+import Roles from "../Pages/Setups/Roles";
 import Users from "../Pages/Setups/Users";
 
 const AppRoutes = () => {
@@ -33,6 +34,7 @@ const AppRoutes = () => {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="setup">
           <Route path="users" element={<Users />} />
+          <Route path="roles" element={<Roles />} />
         </Route>
       </Route>
       <Route path="/pos" element={<Screen />} />

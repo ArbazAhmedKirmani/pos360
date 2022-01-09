@@ -10,26 +10,28 @@ const CreateUpdateForm = (props) => {
       onClose={props.onClose}
       visible={props.visible}
       width={props.width}
+      footer={
+        //{/* Close and Save/Update Button */}
+        <Row style={{ justifyContent: "flex-end" }}>
+          <Button
+            className="button"
+            type="primary"
+            size="large"
+            htmlType="submit"
+            style={{ width: props.isUpdate ? 130 : 100 }}
+          >
+            {props.isUpdate ? "Update" : "Save"}
+          </Button>
+          <Button className="button" onClick={props.onClose} size="large">
+            Close
+          </Button>
+        </Row>
+      }
     >
       <form onSubmit={props.onSubmit}>
         <Row>
           {/* Content goes here... */}
           {props.children}
-
-          {/* Close and Save/Update Button */}
-          <Row style={{ justifyContent: "flex-end" }}>
-            <Button className="button" onClick={props.onClose} size="large">
-              Close
-            </Button>
-            <Button
-              className="button"
-              type="primary"
-              size="large"
-              htmlType="submit"
-            >
-              {props.isUpdate ? "Update" : "Save"}
-            </Button>
-          </Row>
         </Row>
       </form>
     </Drawer>

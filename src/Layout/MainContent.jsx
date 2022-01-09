@@ -41,13 +41,9 @@ const MainContent = () => {
                   <AppstoreFilled />
                 </Link>
               ) : (
-                data.name
+                <Link to={data.path}>{data.name}</Link>
               );
-            return (
-              <Breadcrumb.Item key={index}>
-                <Link to={data.path}>{name}</Link>
-              </Breadcrumb.Item>
-            );
+            return <Breadcrumb.Item key={index}>{name}</Breadcrumb.Item>;
           })}
         </Breadcrumb>
         <Outlet />
