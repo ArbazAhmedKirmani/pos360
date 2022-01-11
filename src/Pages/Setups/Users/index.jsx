@@ -43,6 +43,7 @@ const Users = () => {
   const formMethods = new FormMethods();
   const [dataRows, setDataRows] = useState([]);
   const [statusList, setStatusList] = useState([]);
+  const [searchItems, setSearchItems] = useState({});
 
   useEffect(async () => {
     function getRecords() {
@@ -70,6 +71,11 @@ const Users = () => {
     setStatusList([...statusList]);
   }, []);
 
+  const handleSearchFields = (data) => {
+    setSearchItems({ ...searchItems, [data.name]: data.value });
+    console.log(searchItems);
+  };
+
   const deleteRow = (record, index) => {
     console.log(record, " : ", index);
   };
@@ -91,8 +97,7 @@ const Users = () => {
           size="large"
           placeholder="abc@abc.com"
           type="email"
-          // value={searchFields}
-          // onChange={handleSearchFields}
+          onChange={handleSearchFields}
         />
         <FormInput
           span={4}
@@ -100,8 +105,7 @@ const Users = () => {
           name="fullname"
           size="large"
           placeholder="John Smith"
-          // value={searchFields}
-          // onChange={handleSearchFields}
+          onChange={handleSearchFields}
         />
       </Fragment>
     );

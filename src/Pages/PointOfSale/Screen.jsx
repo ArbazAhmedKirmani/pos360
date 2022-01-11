@@ -1,65 +1,30 @@
 import { Col, Row } from "antd";
 import Layout, { Content, Footer, Header } from "antd/lib/layout/layout";
-import { func } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PosHeader from "./PosHeader";
+import PosProductScreenHeader from "./PosProductScreenHeader";
 
 const Screen = () => {
   const navigate = useNavigate();
   const [online, setOnline] = useState(true);
 
+  const log = (name) => {
+    console.log(name);
+  };
   useEffect(() => {
     window.addEventListener("online", () => setOnline(navigator.onLine));
     window.addEventListener("offline", () => setOnline(navigator.onLine));
     return () => {
-      window.removeEventListener("online");
-      window.removeEventListener("offline");
+      window.removeEventListener("online", log("online"));
+      window.removeEventListener("offline", log("offline"));
     };
   }, []);
 
   return (
     <Layout>
       <Header style={{ color: "white" }}>
-        <Row>
-          <Col span={10}>
-            <Row>
-              <h1
-                style={{ color: "white", fontSize: 38, cursor: "pointer" }}
-                onClick={() => {
-                  navigate(-1);
-                }}
-              >
-                {"< "}
-              </h1>
-              <h2 style={{ color: "white" }}>
-                &nbsp;&nbsp;&nbsp; Point Of Sale
-              </h2>
-            </Row>
-          </Col>
-          <Col span={14}>
-            <Row style={{ flexDirection: "row-reverse", padding: "20px 0" }}>
-              {online ? (
-                <div
-                  style={{
-                    height: 20,
-                    width: 20,
-                    borderRadius: 2,
-                    background: "green",
-                  }}
-                ></div>
-              ) : (
-                <div
-                  style={{
-                    height: 20,
-                    width: 20,
-                    borderRadius: 2,
-                    background: "red",
-                  }}
-                ></div>
-              )}
-            </Row>
-          </Col>
-        </Row>
+        <PosHeader online={online} handleBackButton={() => navigate(-1)} />
       </Header>
       <Content style={{ height: "Calc(100vh - 134px)" }}>
         <Row>
@@ -67,6 +32,7 @@ const Screen = () => {
             span={18}
             style={{ background: "aliceblue", height: "Calc(100vh - 134px)" }}
           >
+            <PosProductScreenHeader />
             Products
           </Col>
           <Col

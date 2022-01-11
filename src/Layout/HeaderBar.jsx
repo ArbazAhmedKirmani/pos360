@@ -3,6 +3,7 @@ import { Col, Row } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import whiteLogo from "../assets/images/logo-white.png";
 import "./layout.css";
+import Indicator from "../Components/BasicComponents/Indicator";
 
 const HeaderBar = (props) => {
   let { collapsed, toggleSidebar } = props;
@@ -27,7 +28,13 @@ const HeaderBar = (props) => {
       </Col>
       <Col span={16}>
         <Row style={{ flexDirection: "row-reverse" }}>
-          <h3>{online ? "Connected" : "Disconnected"}</h3>
+          <h3>
+            {online ? (
+              <Indicator tooltip="Online" color="green" />
+            ) : (
+              <Indicator tooltip="Offline" color="red" />
+            )}
+          </h3>
         </Row>
       </Col>
     </Row>
