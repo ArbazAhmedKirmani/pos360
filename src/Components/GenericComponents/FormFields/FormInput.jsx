@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col, Input } from "antd";
 import PropTypes from "prop-types";
 
@@ -12,7 +12,6 @@ const FormInput = (props) => {
     span,
     label,
     name,
-    value,
     onChange,
     placeholder,
     type,
@@ -20,6 +19,15 @@ const FormInput = (props) => {
     size,
     required,
   } = props;
+
+  const [input, setInput] = useState(null);
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    console.log(event.target);
+    setInput(event.target.value);
+    return onChange({ name: event.target.name, value: event.target.value });
+  };
 
   return (
     <Col
@@ -35,8 +43,8 @@ const FormInput = (props) => {
         className={className}
         name={name}
         placeholder={placeholder}
-        value={value}
-        onChange={onChange}
+        value={input}
+        onChange={handleChange}
         type={type}
         size={size}
         required={required}
@@ -49,7 +57,6 @@ FormInput.propTypes = {
   span: PropTypes.number,
   label: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.object,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
@@ -58,4 +65,4 @@ FormInput.propTypes = {
   required: PropTypes.bool,
 };
 
-export default FormInput;
+export default React.memo(FormInput);

@@ -36,11 +36,13 @@ const FormSelect = (props) => {
         onChange={onChange}
         disabled={disabled}
       >
-        {listArray.map((item, index) => (
-          <Select.Option key={index} value={item.id}>
-            {item.name}
-          </Select.Option>
-        ))}
+        {listArray &&
+          listArray.length &&
+          listArray.map((item, index) => (
+            <Select.Option key={index} value={item.id}>
+              {item.name}
+            </Select.Option>
+          ))}
       </Select>
     </Col>
   );
