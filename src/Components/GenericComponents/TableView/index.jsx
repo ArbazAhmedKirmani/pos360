@@ -107,7 +107,7 @@ const TableView = (props) => {
             <Col xxl={2} xl={3} lg={4} className="input">
               <Button
                 type="primary"
-                size="large"
+                size="default"
                 style={{ width: "100%" }}
                 icon={<SearchOutlined />}
                 onClick={() => searchFunction()}
@@ -124,7 +124,7 @@ const TableView = (props) => {
           <Button
             className="button"
             type="primary"
-            size="large"
+            size="default"
             icon={<FormOutlined />}
             onClick={toggleDrawer}
           >
@@ -134,7 +134,7 @@ const TableView = (props) => {
             <Button
               className="button"
               type="secondary"
-              size="large"
+              size="default"
               icon={<FormOutlined />}
               onClick={toggleBulkDrawer}
             >

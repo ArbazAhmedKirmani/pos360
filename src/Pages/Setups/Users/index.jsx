@@ -88,13 +88,13 @@ const Users = () => {
           span={3}
           placeholder="Select Status"
           listArray={statusList}
-          size="large"
+          size="default"
         />
         <FormInput
           span={4}
           label="Email"
           name="email"
-          size="large"
+          size="default"
           placeholder="abc@abc.com"
           type="email"
           onChange={handleSearchFields}
@@ -103,7 +103,7 @@ const Users = () => {
           span={4}
           label="Full Name"
           name="fullname"
-          size="large"
+          size="default"
           placeholder="John Smith"
           onChange={handleSearchFields}
         />
