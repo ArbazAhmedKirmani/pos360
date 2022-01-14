@@ -71,13 +71,6 @@ const TableView = (props) => {
     setBulkVisible(!bulkVisible);
   };
 
-  const handleSearchFields = (event) => {
-    setSearchFields({
-      ...searchFields,
-      [event.target.name]: event.target.value,
-    });
-  };
-
   const onSubmit = () => {
     console.log(searchFields);
     if (updating) {
@@ -91,7 +84,7 @@ const TableView = (props) => {
 
   return (
     <Fragment>
-      <form onChange={handleSearchFields}>
+      <form onSubmit={searchFunction}>
         <Row
           style={{
             justifyContent: "flex-end",
@@ -100,17 +93,17 @@ const TableView = (props) => {
             paddingBottom: 10,
           }}
         >
-          <Col xxl={22} xl={21} lg={20}>
+          <Col xxl={22} xl={21} lg={20} md={18}>
             <Row style={{ flexDirection: "row-reverse" }}>{searchSpace}</Row>
           </Col>
           {searchSpace && (
-            <Col xxl={2} xl={3} lg={4} className="input">
+            <Col xxl={2} xl={3} lg={4} md={6} className="input">
               <Button
                 type="primary"
+                htmlType="submit"
                 size="default"
                 style={{ width: "100%" }}
                 icon={<SearchOutlined />}
-                onClick={() => searchFunction()}
               >
                 Search
               </Button>

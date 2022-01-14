@@ -4,6 +4,7 @@ import FormInput from "../../../Components/GenericComponents/FormFields/FormInpu
 import FormSelect from "../../../Components/GenericComponents/FormFields/FormSelect";
 import TableView from "../../../Components/GenericComponents/TableView";
 import FormMethods from "../../../Functions/ComponentFunctions/FormMethods";
+import useInputField from "../../../Hooks/useInputField";
 
 const columnNames = [
   {
@@ -45,6 +46,8 @@ const Users = () => {
   const [statusList, setStatusList] = useState([]);
   const [searchItems, setSearchItems] = useState({});
 
+  const { ...searchFields } = useInputField();
+
   useEffect(async () => {
     function getRecords() {
       setDataRows(
@@ -71,7 +74,7 @@ const Users = () => {
     setStatusList([...statusList]);
   }, []);
 
-  const handleSearchFields = (data) => {
+  const submitSearchFields = (data) => {
     setSearchItems({ ...searchItems, [data.name]: data.value });
     console.log(searchItems);
   };
@@ -89,6 +92,7 @@ const Users = () => {
           placeholder="Select Status"
           listArray={statusList}
           size="default"
+          {...searchFields}
         />
         <FormInput
           span={4}
@@ -96,8 +100,7 @@ const Users = () => {
           name="email"
           size="default"
           placeholder="abc@abc.com"
-          type="email"
-          onChange={handleSearchFields}
+          {...searchFields}
         />
         <FormInput
           span={4}
@@ -105,7 +108,7 @@ const Users = () => {
           name="fullname"
           size="default"
           placeholder="John Smith"
-          onChange={handleSearchFields}
+          {...searchFields}
         />
       </Fragment>
     );
@@ -125,6 +128,7 @@ const Users = () => {
         createUpdateDrawerWidth="40vw"
         bulkCreateDrawerWidth="60vh"
         searchSpace={<SearchComponent />}
+        searchFunction={submitSearchFields}
       />
     </div>
   );

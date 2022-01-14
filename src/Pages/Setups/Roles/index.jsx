@@ -22,7 +22,7 @@ const Roles = () => {
         <FormInput
           label="Role Name"
           name="roleName"
-          size="large"
+          size="default"
           placeholder="Role Name"
         />
       </Fragment>
