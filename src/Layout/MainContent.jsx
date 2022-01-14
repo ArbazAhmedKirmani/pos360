@@ -30,7 +30,8 @@ const MainContent = () => {
         theme="light"
         style={{
           padding: "15px 20px",
-          height: "Calc(100vh - 112px)",
+          height: "Calc(100vh - 64px)",
+          overflowY: "scroll",
         }}
       >
         <Breadcrumb separator=">">
@@ -48,7 +49,7 @@ const MainContent = () => {
         </Breadcrumb>
         <Outlet />
       </Content>
-      <FooterContent />
+      {/* <FooterContent /> */}
     </div>
   );
 };
