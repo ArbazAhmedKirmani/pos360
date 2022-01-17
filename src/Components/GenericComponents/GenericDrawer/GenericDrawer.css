@@ -1,0 +1,14 @@
+.ant-drawer-content-wrapper {
+  background: none !important;
+}
+.ant-drawer-content {
+  background: none !important;
+}
+.drawer-background {
+  background-color: none !important;
+}
+.ant-drawer-wrapper-body {
+  margin: 10px !important;
+  background: white !important;
+  border-radius: 5px !important;
+}

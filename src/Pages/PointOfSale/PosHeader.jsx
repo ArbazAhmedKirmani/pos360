@@ -20,7 +20,7 @@ const PosHeader = (props) => {
         </Row>
       </Col>
       <Col span={14}>
-        <Row style={{ flexDirection: "row-reverse", padding: "20px 0" }}>
+        <Row style={{ flexDirection: "row-reverse" }}>
           {online ? (
             <Indicator tooltip="Online" color="green" />
           ) : (

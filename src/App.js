@@ -3,13 +3,20 @@ import { BrowserRouter } from "react-router-dom";
 import "antd/dist/antd.min.css";
 import "./App.less";
 import AppRoutes from "./Routes/appRoutes.routes";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import combineReducer from "./Redux/combineReducer";
+
+const Store = createStore(combineReducer);
 
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <Provider store={Store}>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </Provider>
     );
   }
 }

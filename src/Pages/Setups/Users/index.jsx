@@ -1,10 +1,13 @@
-import { Tag } from "antd";
+import { Button, Tag } from "antd";
 import React, { Fragment, useEffect, useState } from "react";
+import { SearchOutlined } from "@ant-design/icons";
 import FormInput from "../../../Components/GenericComponents/FormFields/FormInput";
 import FormSelect from "../../../Components/GenericComponents/FormFields/FormSelect";
 import TableView from "../../../Components/GenericComponents/TableView";
 import FormMethods from "../../../Functions/ComponentFunctions/FormMethods";
 import useInputField from "../../../Hooks/useInputField";
+import { TransformationMethods } from "../../../Functions/commonFunctions";
+import { getSearchedData } from "../../../Services/user.service";
 
 const columnNames = [
   {
@@ -42,9 +45,12 @@ const columnNames = [
 
 const Users = () => {
   const formMethods = new FormMethods();
+  const transformationMethod = new TransformationMethods();
   const [dataRows, setDataRows] = useState([]);
   const [statusList, setStatusList] = useState([]);
-  const [searchItems, setSearchItems] = useState({});
+  // const [searchItems, setSearchItems] = useState({});
+  let search = {};
+  let form = {};
 
   const { ...searchFields } = useInputField();
 
@@ -74,9 +80,14 @@ const Users = () => {
     setStatusList([...statusList]);
   }, []);
 
-  const submitSearchFields = (data) => {
-    setSearchItems({ ...searchItems, [data.name]: data.value });
-    console.log(searchItems);
+  const submitSearchFields = (e) => {
+    e.preventDefault();
+    let queryString = transformationMethod.buildQueryStringFromObject(search);
+    getSearchedData(queryString);
+  };
+
+  const handleSearchField = (event) => {
+    search = { ...search, [event.name]: event.value };
   };
 
   const deleteRow = (record, index) => {
@@ -87,12 +98,13 @@ const Users = () => {
     return (
       <Fragment>
         <FormSelect
+          name="status"
           label="Status"
           span={3}
           placeholder="Select Status"
           listArray={statusList}
           size="default"
-          {...searchFields}
+          onChange={handleSearchField}
         />
         <FormInput
           span={4}
@@ -100,7 +112,7 @@ const Users = () => {
           name="email"
           size="default"
           placeholder="abc@abc.com"
-          {...searchFields}
+          onChange={handleSearchField}
         />
         <FormInput
           span={4}
@@ -108,8 +120,16 @@ const Users = () => {
           name="fullname"
           size="default"
           placeholder="John Smith"
-          {...searchFields}
+          onChange={handleSearchField}
         />
+        <Button
+          type="primary"
+          htmlType="submit"
+          size="default"
+          icon={<SearchOutlined />}
+        >
+          Search
+        </Button>
       </Fragment>
     );
   };
@@ -134,4 +154,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default React.memo(Users);
