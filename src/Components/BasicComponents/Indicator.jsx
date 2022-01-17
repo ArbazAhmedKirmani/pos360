@@ -10,8 +10,9 @@ const Indicator = (props) => {
         style={{
           height: 20,
           width: 20,
-          borderRadius: 2,
-          background: { color },
+          borderRadius: 5,
+          background: color,
+          margin: 20,
         }}
       ></div>
     </Tooltip>

@@ -23,7 +23,6 @@ const FormInput = (props) => {
   const [input, setInput] = useState(null);
 
   const handleChange = (event) => {
-    event.preventDefault();
     console.log(event.target);
     setInput(event.target.value);
     return onChange({ name: event.target.name, value: event.target.value });
@@ -38,7 +37,15 @@ const FormInput = (props) => {
       sm={span + span / 2}
       style={{ padding: 3 }}
     >
-      <span style={{ padding: "0 2px" }}>{label}</span>
+      <span
+        style={{
+          position: "absolute",
+          top: -18,
+          fontSize: 14,
+        }}
+      >
+        {label}
+      </span>
       <Input
         className={className}
         name={name}

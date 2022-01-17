@@ -84,33 +84,20 @@ const TableView = (props) => {
 
   return (
     <Fragment>
-      <form onSubmit={searchFunction}>
-        <Row
-          style={{
-            justifyContent: "flex-end",
-            alignItems: "flex-end",
-            borderBottom: "0.5px solid #f1f1f1",
-            paddingBottom: 10,
-          }}
-        >
-          <Col xxl={22} xl={21} lg={20} md={18}>
-            <Row style={{ flexDirection: "row-reverse" }}>{searchSpace}</Row>
-          </Col>
-          {searchSpace && (
-            <Col xxl={2} xl={3} lg={4} md={6} className="input">
-              <Button
-                type="primary"
-                htmlType="submit"
-                size="default"
-                style={{ width: "100%" }}
-                icon={<SearchOutlined />}
-              >
-                Search
-              </Button>
-            </Col>
-          )}
-        </Row>
-      </form>
+      {searchSpace && (
+        <form onSubmit={searchFunction}>
+          <Row
+            style={{
+              justifyContent: "flex-end",
+              alignItems: "center",
+              borderBottom: "0.5px solid #f1f1f1",
+              paddingBottom: 10,
+            }}
+          >
+            {searchSpace}
+          </Row>
+        </form>
+      )}
       <div style={{ display: "flex" }}>{children}</div>
       <div style={{ display: "flex", justifyContent: "flex-start" }}>
         <div style={{ display: "flex", flex: 1, justifyContent: "flex-start" }}>

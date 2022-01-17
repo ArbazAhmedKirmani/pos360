@@ -1,3 +1,4 @@
+const constant = require("./src/themeConstant");
 const CracoLessPlugin = require("craco-less");
 
 module.exports = {
@@ -8,7 +9,8 @@ module.exports = {
         lessLoaderOptions: {
           lessOptions: {
             modifyVars: {
-              "@primary-color": "#000000",
+              "@primary-color": constant.app_theme,
+              "@drawer-bg": constant.drawer_theme,
             },
             javascriptEnabled: true,
           },

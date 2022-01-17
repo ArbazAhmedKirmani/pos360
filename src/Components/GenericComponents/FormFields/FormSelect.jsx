@@ -1,5 +1,5 @@
 import { Col, Select } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const FormSelect = (props) => {
@@ -14,7 +14,15 @@ const FormSelect = (props) => {
     disabled, // Disable the component
     size, // Size of the component
     placeholder, // Placeholder for COmponent
+    name,
   } = props;
+
+  const [input, setInput] = useState(null);
+
+  const handleChange = (value, name) => {
+    setInput(value);
+    return onChange({ name, value });
+  };
 
   return (
     <Col
@@ -24,8 +32,17 @@ const FormSelect = (props) => {
       sm={span / 2}
       style={{ padding: 3 }}
     >
-      <span style={{ padding: "0 2px" }}>{label}</span>
+      <span
+        style={{
+          position: "absolute",
+          top: -18,
+          fontSize: 14,
+        }}
+      >
+        {label}
+      </span>
       <Select
+        name={name}
         placeholder={placeholder}
         placement="bottomRight"
         defaultValue={defaultValue}
@@ -33,7 +50,7 @@ const FormSelect = (props) => {
         loading={loading}
         size={size}
         value={value}
-        onChange={onChange}
+        onChange={(value) => handleChange(value, name)}
         disabled={disabled}
       >
         {listArray &&

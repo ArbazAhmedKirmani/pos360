@@ -13,8 +13,8 @@ const HeaderBar = (props) => {
     window.addEventListener("online", () => setOnline(navigator.onLine));
     window.addEventListener("offline", () => setOnline(navigator.onLine));
     return () => {
-      window.removeEventListener("online");
-      window.removeEventListener("offline");
+      window.removeEventListener("online", console.log("ofline"));
+      window.removeEventListener("offline", console.log("ofline"));
     };
   }, []);
   return (

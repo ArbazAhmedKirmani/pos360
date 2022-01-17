@@ -1,3 +1,5 @@
+import { getByQueryString } from "./ServiceConfig";
+
 export const GetTableColumn = () => {
   return Promise.resolve([
     { title: "Name", dataIndex: "fullName", render: "name" },
@@ -6,4 +8,8 @@ export const GetTableColumn = () => {
     { title: "Role", dataIndex: "roleRef", render: "roleName" },
     { title: "Status", dataIndex: "isActive", render: "isActive" },
   ]);
+};
+
+export const getSearchedData = (string) => {
+  return getByQueryString(string);
 };

@@ -4,8 +4,8 @@ const useInputField = () => {
   const [value, setValue] = useState({});
 
   const onChange = (event) => {
-    console.log(event.target);
-    setValue({ ...value, [event.target.name]: event.target.value });
+    console.log(event);
+    setValue({ ...value, [event.name]: event.value });
   };
 
   const reset = () => {
