@@ -22,7 +22,6 @@ const TableView = (props) => {
     children, // Space after Search Bar before Create Button
     buttonRightFlex, // Space to the right of the Create Button
     searchSpace, // Space before Search Bar
-    searchFunction, // Search Function
     additionalSpace, // Space before Table and after Create Button
     createForm, // Creation Form
     updateForm, // Updation Form
@@ -85,18 +84,17 @@ const TableView = (props) => {
   return (
     <Fragment>
       {searchSpace && (
-        <form onSubmit={searchFunction}>
-          <Row
-            style={{
-              justifyContent: "flex-end",
-              alignItems: "center",
-              borderBottom: "0.5px solid #f1f1f1",
-              paddingBottom: 10,
-            }}
-          >
-            {searchSpace}
-          </Row>
-        </form>
+        <Row
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            borderBottom: "0.5px solid #f1f1f1",
+            paddingBottom: 10,
+          }}
+        >
+          {searchSpace}
+        </Row>
       )}
       <div style={{ display: "flex" }}>{children}</div>
       <div style={{ display: "flex", justifyContent: "flex-start" }}>
@@ -184,7 +182,6 @@ TableView.propTypes = {
   children: PropTypes.element,
   buttonRightFlex: PropTypes.element,
   searchSpace: PropTypes.element,
-  searchFunction: PropTypes.func,
   additionalSpace: PropTypes.element,
   bulkForm: PropTypes.element,
   tableSize: PropTypes.string,

@@ -1,12 +1,14 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:4520/"; //process.env.BASE_URL;
+axios.defaults.baseURL = "http://18.223.23.61:5005/"; //process.env.REACT_APP_BASE_URL;
 // axios.defaults.headers.common[
 //   "Authorization"
 // ] = `Bearer  ${sessionStorage.getItem("Token360")};`;
 // "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjFkMDFiZmVmODYxMDAwMGM4MDAwNTM0IiwidXNlcm5hbWUiOiJzdWZpIiwiZGJOYW1lIjoiMzYwU29sdXRpb24ifSwiaWF0IjoxNjQxMDI4NjYyLCJleHAiOjE2NDExMTUwNjJ9.FK16maL_q_qzJNyKXmKxcBsai12ma0HBCHKIfB-p8mk";
 // sessionStorage.getItem("Token");
 axios.defaults.headers.post["Content-Type"] = "application/json";
+// axios.defaults.headers.post["Content-Type"] =
+//   "application/x-www-form-urlencoded";
 // axios.defaults.timeout = 60000;
 
 /**
@@ -15,8 +17,8 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
  * @param {object} data your data object
  * @returns
  */
-export const authRoute = (url, data) => {
-  return axios.post(`auth/${url}`, data);
+export const authRoute = (data) => {
+  return axios.post(`login`, data);
 };
 
 /**

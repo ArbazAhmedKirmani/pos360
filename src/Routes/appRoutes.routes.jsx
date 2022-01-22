@@ -12,7 +12,7 @@ const AppRoutes = () => {
   const location = useLocation();
 
   const RequireAuth = ({ children }) => {
-    let storage = localStorage.getItem("posToken");
+    let storage = sessionStorage.getItem("posToken");
     if (storage != null) {
       return children;
     } else {
