@@ -1,4 +1,4 @@
-import { Button, Tag } from "antd";
+import { Button, Form, Tag } from "antd";
 import React, { Fragment, useEffect, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import FormInput from "../../../Components/GenericComponents/FormFields/FormInput";
@@ -80,14 +80,13 @@ const Users = () => {
     setStatusList([...statusList]);
   }, []);
 
-  const submitSearchFields = (e) => {
-    e.preventDefault();
+  const submitSearchFields = () => {
     let queryString = transformationMethod.buildQueryStringFromObject(search);
     getSearchedData(queryString);
   };
 
-  const handleSearchField = (event) => {
-    search = { ...search, [event.name]: event.value };
+  const handleSearchField = (data) => {
+    search = { ...search, [data.name]: data.value };
   };
 
   const deleteRow = (record, index) => {
@@ -96,7 +95,7 @@ const Users = () => {
 
   const SearchComponent = () => {
     return (
-      <Fragment>
+      <Form onSubmitCapture={submitSearchFields}>
         <FormSelect
           name="status"
           label="Status"
@@ -130,7 +129,7 @@ const Users = () => {
         >
           Search
         </Button>
-      </Fragment>
+      </Form>
     );
   };
 

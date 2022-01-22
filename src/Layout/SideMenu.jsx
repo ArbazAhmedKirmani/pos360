@@ -13,8 +13,8 @@ import { NavLink } from "react-router-dom";
 
 const SideMenu = ({ collapsed }) => {
   return (
-    <Sider theme="dark" className="sidebar" collapsed={collapsed}>
-      <Menu defaultSelectedKeys={["1"]} mode="inline" theme="dark">
+    <Sider theme="light" className="sidebar" collapsed={collapsed}>
+      <Menu defaultSelectedKeys={["1"]} mode="inline" theme="light">
         <Menu.Item key="1" icon={<AppstoreFilled />}>
           <NavLink to="/dashboard">Dashboard</NavLink>
         </Menu.Item>

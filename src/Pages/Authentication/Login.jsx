@@ -1,14 +1,24 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./authentication.css";
+import { authRoute } from "../../Services/ServiceConfig";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState({});
+
+  const handleChange = (event) => {
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
 
   const submitLogin = () => {
-    localStorage.setItem("posToken", "abcd");
+    authRoute(data).then(
+      (success) => console.log(success),
+      (error) => console.error(error)
+    );
+    // localStorage.setItem("posToken", );
     navigate("/dashboard");
   };
   return (
@@ -20,22 +30,24 @@ const Login = () => {
         onFinish={submitLogin}
       >
         <Form.Item
-          name="username"
           rules={[{ required: true, message: "Please input your Username" }]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
+            name="Username"
             placeholder="Username"
+            onChange={handleChange}
           />
         </Form.Item>
         <Form.Item
-          name="password"
           rules={[{ required: true, message: "Please input your Password" }]}
         >
           <Input
+            name="Password"
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
+            onChange={handleChange}
           />
         </Form.Item>
         <Form.Item>
