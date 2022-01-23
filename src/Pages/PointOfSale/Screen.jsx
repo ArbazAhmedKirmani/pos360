@@ -10,7 +10,7 @@ const Screen = () => {
   const [online, setOnline] = useState(true);
 
   const log = (name) => {
-    console.log(name);
+    console.error(name);
   };
   useEffect(() => {
     window.addEventListener("online", () => setOnline(navigator.onLine));

@@ -14,7 +14,6 @@ axios.defaults.timeout = 60000;
 
 axios.interceptors.request.use((request) => {
   const appData = store.getState().AppReducer;
-
   // add auth header with jwt if account is logged in and request is to the api url
   const token = localStorage.getItem("posToken");
   const isApiUrl = request.url.startsWith(process.env.REACT_APP_API_URL);
@@ -27,8 +26,6 @@ axios.interceptors.request.use((request) => {
       UserID: appData.userId,
     });
   }
-
-  console.log(request.data);
 
   return request;
 });

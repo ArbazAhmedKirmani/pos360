@@ -1,11 +1,19 @@
 import React, { createElement, useEffect, useState } from "react";
-import { Col, Row } from "antd";
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import { Button, Col, Dropdown, Menu, Row } from "antd";
+import {
+  MenuUnfoldOutlined,
+  MoreOutlined,
+  UserOutlined,
+  MenuFoldOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import whiteLogo from "../assets/images/logo-white.png";
 import "./layout.css";
 import Indicator from "../Components/BasicComponents/Indicator";
+import { useNavigate } from "react-router-dom";
 
 const HeaderBar = (props) => {
+  const navigate = useNavigate();
   let { collapsed, toggleSidebar } = props;
   const [online, setOnline] = useState(true);
 
@@ -13,10 +21,30 @@ const HeaderBar = (props) => {
     window.addEventListener("online", () => setOnline(navigator.onLine));
     window.addEventListener("offline", () => setOnline(navigator.onLine));
     return () => {
-      window.removeEventListener("online", console.log("ofline"));
-      window.removeEventListener("offline", console.log("ofline"));
+      window.removeEventListener("online");
+      window.removeEventListener("offline");
     };
   }, []);
+
+  const logout = () => {
+    localStorage.removeItem("posToken");
+    navigate("/login");
+  };
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="3">
+        <UserOutlined /> &nbsp; Profile
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="0">
+        <a onClick={logout}>
+          <LogoutOutlined /> &nbsp; Logout
+        </a>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <Row>
       <Col span={8}>
@@ -28,6 +56,11 @@ const HeaderBar = (props) => {
       </Col>
       <Col span={16}>
         <Row style={{ flexDirection: "row-reverse" }}>
+          <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
+            <Button type="text" style={{ margin: "10px 0" }}>
+              <MoreOutlined style={{ color: "white", fontSize: 26 }} />
+            </Button>
+          </Dropdown>
           <h3>
             {online ? (
               <Indicator tooltip="Online" color="green" />
