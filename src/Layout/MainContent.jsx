@@ -4,11 +4,10 @@ import FooterContent from "./FooterContent";
 import { Breadcrumb } from "antd";
 import { AppstoreFilled } from "@ant-design/icons";
 import { Link, Outlet } from "react-router-dom";
-import { TransformationMethods } from "../Functions/commonFunctions";
+import { capitalizeFirstLetter } from "../Functions/commonFunctions";
 
 const MainContent = () => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
-  const transformMethod = new TransformationMethods();
   let location;
   useEffect(() => {
     location = window.location.pathname.split("/");
@@ -16,7 +15,7 @@ const MainContent = () => {
     let reminder = "";
     location.forEach((loc, index) => {
       array.push({
-        name: transformMethod.capitalizeFirstLetter(loc).toString(),
+        name: capitalizeFirstLetter(loc).toString(),
         path: reminder + `${loc}/`,
       });
       reminder = `${loc}/`;
