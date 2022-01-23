@@ -29,6 +29,7 @@ const Login = () => {
         let { loginDetails, menu, token } = success.data.Data;
         dispatch(SET_APP_INFORMATION(loginDetails));
         dispatch(SET_APP_MENUS(menu));
+        localStorage.setItem("posMenu", JSON.stringify(menu));
         localStorage.setItem("posToken", token.tokenValue);
         navigate("/dashboard");
         setIsLoading(!isLoading);
