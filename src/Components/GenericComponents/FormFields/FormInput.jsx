@@ -20,11 +20,7 @@ const FormInput = (props) => {
     required,
   } = props;
 
-  const [input, setInput] = useState(null);
-
   const handleChange = (event) => {
-    console.log(event.target);
-    setInput(event.target.value);
     return onChange({ name: event.target.name, value: event.target.value });
   };
 

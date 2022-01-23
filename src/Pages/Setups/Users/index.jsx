@@ -4,7 +4,10 @@ import { SearchOutlined } from "@ant-design/icons";
 import FormInput from "../../../Components/GenericComponents/FormFields/FormInput";
 import FormSelect from "../../../Components/GenericComponents/FormFields/FormSelect";
 import TableView from "../../../Components/GenericComponents/TableView";
-import FormMethods from "../../../Functions/ComponentFunctions/FormMethods";
+import {
+  getKeysAttached,
+  getSelectArrayList,
+} from "../../../Functions/ComponentFunctions/FormMethods";
 import useInputField from "../../../Hooks/useInputField";
 import { buildQueryStringFromObject } from "../../../Functions/commonFunctions";
 import { getSearchedData } from "../../../Services/user.service";
@@ -44,7 +47,6 @@ const columnNames = [
 ];
 
 const Users = () => {
-  const formMethods = new FormMethods();
   const [dataRows, setDataRows] = useState([]);
   const [statusList, setStatusList] = useState([]);
   // const [searchItems, setSearchItems] = useState({});
@@ -56,7 +58,7 @@ const Users = () => {
   useEffect(async () => {
     function getRecords() {
       setDataRows(
-        formMethods.getKeysAttached([
+        getKeysAttached([
           {
             fullName: "Syed Arbaz Ahmed Kirmani",
             username: "admin",
@@ -68,7 +70,7 @@ const Users = () => {
       );
     }
     getRecords();
-    let statusList = formMethods.getSelectArrayList(
+    let statusList = getSelectArrayList(
       [
         { userID: "1", userName: "Active" },
         { userID: "2", userName: "In Active" },

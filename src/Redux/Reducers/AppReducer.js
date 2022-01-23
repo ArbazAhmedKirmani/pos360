@@ -1,8 +1,8 @@
 import { SET_APP_INFO, SET_MENUS } from "../Constants";
 
 const initialState = {
-  loginDetails: {},
-  menus: [],
+  loginDetails: JSON.parse(sessionStorage.getItem("posLoginDetail")) || {},
+  menus: JSON.parse(sessionStorage.getItem("posMenu")) || [],
 };
 
 const AppReducer = (state = initialState, action) => {

@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Table, Button, Row, Col } from "antd";
-import { SearchOutlined, FormOutlined } from "@ant-design/icons";
+import { Table, Button, Row } from "antd";
+import { FormOutlined } from "@ant-design/icons";
 import "./tableView.css";
 import PropTypes, { object } from "prop-types";
-import FormMethods from "../../../Functions/ComponentFunctions/FormMethods";
+import { getTableColumnWithSorting } from "../../../Functions/ComponentFunctions/FormMethods";
 import CreateUpdateForm from "./CreateUpdateForm";
 
 /**
@@ -34,8 +34,6 @@ const TableView = (props) => {
     onUpdateSubmit, // Update Form Submit Function
   } = props;
 
-  const formMethod = new FormMethods();
-
   const [visible, setVisible] = useState(false);
   const [bulkVisible, setBulkVisible] = useState(false);
   const [updating, setUpdating] = useState(false);
@@ -53,11 +51,7 @@ const TableView = (props) => {
   };
 
   useEffect(() => {
-    let formColumn = formMethod.getTableColumnWithSorting(
-      columns,
-      editRow,
-      deleteRow
-    );
+    let formColumn = getTableColumnWithSorting(columns, editRow, deleteRow);
     setColumnList([...formColumn]);
   }, [columns]);
 
