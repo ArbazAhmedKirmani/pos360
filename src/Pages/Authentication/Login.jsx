@@ -9,10 +9,12 @@ import {
   SET_APP_INFORMATION,
   SET_APP_MENUS,
 } from "../../Redux/Actions/AppAction";
+import { openLinkedMessage } from "../../Components/Messages";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
 
   const handleChange = (event) => {
@@ -20,6 +22,8 @@ const Login = () => {
   };
 
   const submitLogin = () => {
+    setIsLoading(!isLoading);
+    openLinkedMessage("loading", "Signing In", "signin");
     authRoute(data).then(
       (success) => {
         let { loginDetails, menu, token } = success.data.Data;
@@ -27,8 +31,14 @@ const Login = () => {
         dispatch(SET_APP_MENUS(menu));
         localStorage.setItem("posToken", token.tokenValue);
         navigate("/dashboard");
+        setIsLoading(!isLoading);
+        openLinkedMessage("success", "SignIn Successful", "signin");
       },
-      (error) => console.error(error)
+      (error) => {
+        console.error(error);
+        setIsLoading(!isLoading);
+        openLinkedMessage("error", "Something went wrong", "signin");
+      }
     );
   };
   return (
@@ -72,6 +82,7 @@ const Login = () => {
             htmlType="submit"
             className="login-form-button"
             block
+            loading={isLoading}
           >
             Log in
           </Button>
