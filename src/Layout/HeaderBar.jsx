@@ -21,13 +21,14 @@ const HeaderBar = (props) => {
     window.addEventListener("online", () => setOnline(navigator.onLine));
     window.addEventListener("offline", () => setOnline(navigator.onLine));
     return () => {
-      window.removeEventListener("online");
-      window.removeEventListener("offline");
+      window.removeEventListener("online", () => setOnline(navigator.onLine));
+      window.removeEventListener("offline", () => setOnline(navigator.onLine));
     };
   }, []);
 
   const logout = () => {
     localStorage.removeItem("posToken");
+    localStorage.removeItem("posMenu");
     navigate("/login");
   };
 

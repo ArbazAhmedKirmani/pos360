@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Menu } from "antd";
 import {
   ToolOutlined,
@@ -13,12 +13,22 @@ import { NavLink } from "react-router-dom";
 
 const SideMenu = ({ collapsed }) => {
   const app = useSelector((state) => state.AppReducer);
-  let { menus } = app;
+  const [menuList, setMenuList] = useState([]);
+
+  useEffect(() => {
+    if (app.menus.length === 0) {
+      console.log("If", JSON.parse(localStorage.getItem("posMenu")));
+      setMenuList(JSON.parse(localStorage.getItem("posMenu")));
+    } else {
+      console.log("Else: ", app.menus);
+      setMenuList(app.menus);
+    }
+  }, []);
 
   return (
     <Sider theme="light" className="sidebar" collapsed={collapsed}>
       <Menu defaultSelectedKeys={["1"]} mode="inline" theme="light">
-        {menus.map((menu) => {
+        {menuList.map((menu) => {
           if (
             menu.isChild === "False" &&
             menu.isParent === "False" &&
@@ -40,7 +50,7 @@ const SideMenu = ({ collapsed }) => {
                 icon={<ToolOutlined />}
                 title={menu.menuName}
               >
-                {menus.map((menuChild) => {
+                {menuList.map((menuChild) => {
                   if (
                     menuChild.isChild === "True" &&
                     menuChild.isParent === "False" &&
