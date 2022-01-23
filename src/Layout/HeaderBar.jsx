@@ -7,15 +7,17 @@ import {
   MenuFoldOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import whiteLogo from "../assets/images/logo-white.png";
+// import whiteLogo from "../assets/images/logo-white.png";
 import "./layout.css";
 import Indicator from "../Components/BasicComponents/Indicator";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const HeaderBar = (props) => {
   const navigate = useNavigate();
   let { collapsed, toggleSidebar } = props;
   const [online, setOnline] = useState(true);
+  const AppReducer = useSelector((state) => state.AppReducer);
 
   useEffect(() => {
     window.addEventListener("online", () => setOnline(navigator.onLine));
@@ -28,7 +30,8 @@ const HeaderBar = (props) => {
 
   const logout = () => {
     localStorage.removeItem("posToken");
-    localStorage.removeItem("posMenu");
+    sessionStorage.removeItem("posLoginDetail");
+    sessionStorage.removeItem("posMenu");
     navigate("/login");
   };
 
@@ -53,7 +56,7 @@ const HeaderBar = (props) => {
           className: "trigger",
           onClick: () => toggleSidebar(),
         })}
-        <img src={whiteLogo} alt="logo" style={{ height: 15, width: "auto" }} />
+        {/* <img src={whiteLogo} alt="logo" style={{ height: 15, width: "auto" }} /> */}
       </Col>
       <Col span={16}>
         <Row style={{ flexDirection: "row-reverse" }}>
@@ -62,13 +65,14 @@ const HeaderBar = (props) => {
               <MoreOutlined style={{ color: "white", fontSize: 26 }} />
             </Button>
           </Dropdown>
-          <h3>
+          <div>
             {online ? (
               <Indicator tooltip="Online" color="green" />
             ) : (
               <Indicator tooltip="Offline" color="red" />
             )}
-          </h3>
+          </div>
+          <h4 style={{ color: "white" }}>{AppReducer.loginDetails.fullName}</h4>
         </Row>
       </Col>
     </Row>

@@ -13,7 +13,7 @@ axios.defaults.headers.put["Content-Type"] = "application/json";
 axios.defaults.timeout = 60000;
 
 axios.interceptors.request.use((request) => {
-  const appData = store.getState().AppReducer;
+  const appData = store.getState().AppReducer.loginDetails;
   // add auth header with jwt if account is logged in and request is to the api url
   const token = localStorage.getItem("posToken");
   const isApiUrl = request.url.startsWith(process.env.REACT_APP_API_URL);
@@ -22,11 +22,11 @@ axios.interceptors.request.use((request) => {
     request.headers.common.Authorization = `Bearer ${account}`;
     request.data = JSON.stringify({
       ...request.data,
-      CompanyID: appData.companyId,
-      UserID: appData.userId,
+      companyId: appData.companyId,
+      userId: appData.userId,
     });
   }
-
+  console.log(request.data);
   return request;
 });
 
