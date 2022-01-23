@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://18.223.23.61:5005/"; //process.env.REACT_APP_BASE_URL;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL; // "http://18.223.23.61:5005/"; //process.env.REACT_APP_BASE_URL;
 // axios.defaults.headers.common[
 //   "Authorization"
 // ] = `Bearer  ${sessionStorage.getItem("Token360")};`;
@@ -10,6 +10,17 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 // axios.defaults.headers.post["Content-Type"] =
 //   "application/x-www-form-urlencoded";
 // axios.defaults.timeout = 60000;
+
+axios.interceptors.request.use((value) => {
+  value.headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "*",
+    "Access-Control-Allow-Headers": "*",
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  };
+  return value;
+});
 
 /**
  * this method helps to access authentication path from server
