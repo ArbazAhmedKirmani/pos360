@@ -8,8 +8,8 @@ const Indicator = (props) => {
     <Tooltip placement="bottom" title={tooltip}>
       <div
         style={{
-          height: 20,
-          width: 20,
+          height: 18,
+          width: 18,
           borderRadius: 5,
           background: color,
           margin: 20,

@@ -1,12 +1,12 @@
 import { Button, Form, Tag } from "antd";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import FormInput from "../../../Components/GenericComponents/FormFields/FormInput";
 import FormSelect from "../../../Components/GenericComponents/FormFields/FormSelect";
 import TableView from "../../../Components/GenericComponents/TableView";
 import FormMethods from "../../../Functions/ComponentFunctions/FormMethods";
 import useInputField from "../../../Hooks/useInputField";
-import { TransformationMethods } from "../../../Functions/commonFunctions";
+import { buildQueryStringFromObject } from "../../../Functions/commonFunctions";
 import { getSearchedData } from "../../../Services/user.service";
 
 const columnNames = [
@@ -45,7 +45,6 @@ const columnNames = [
 
 const Users = () => {
   const formMethods = new FormMethods();
-  const transformationMethod = new TransformationMethods();
   const [dataRows, setDataRows] = useState([]);
   const [statusList, setStatusList] = useState([]);
   // const [searchItems, setSearchItems] = useState({});
@@ -81,7 +80,7 @@ const Users = () => {
   }, []);
 
   const submitSearchFields = () => {
-    let queryString = transformationMethod.buildQueryStringFromObject(search);
+    let queryString = buildQueryStringFromObject(search);
     getSearchedData(queryString);
   };
 

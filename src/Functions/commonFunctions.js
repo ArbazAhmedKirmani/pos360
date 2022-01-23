@@ -29,95 +29,91 @@ const getMonthDayForMonthInteger = (monthInteger) => {
   }
 };
 
-export class CommonDateMethods {
-  /**
-   * this method return date format (Month Date, Year Hour:Min:Sec)
-   * @param {string} isoDateString
-   * @returns
-   */
-  getFormattedDateTime(isoDateString) {
-    const jsDate = new Date(isoDateString);
-    return `${getMonthDayForMonthInteger(
-      jsDate.getMonth()
-    )} ${jsDate.getDate()}, ${jsDate.getFullYear()} ${jsDate.getHours()}:${jsDate.getMinutes()}:${jsDate.getSeconds()}`;
-  }
+/**
+ * this method return date format (Month Date, Year Hour:Min:Sec)
+ * @param {string} isoDateString
+ * @returns
+ */
+export const getFormattedDateTime = (isoDateString) => {
+  const jsDate = new Date(isoDateString);
+  return `${getMonthDayForMonthInteger(
+    jsDate.getMonth()
+  )} ${jsDate.getDate()}, ${jsDate.getFullYear()} ${jsDate.getHours()}:${jsDate.getMinutes()}:${jsDate.getSeconds()}`;
+};
 
-  /**
-   * this method return date format (Month Date, Year)
-   * @param {string} isoDateString
-   * @returns
-   */
-  getFormattedDate(isoDateString) {
-    const jsDate = new Date(isoDateString);
-    return `${getMonthDayForMonthInteger(
-      jsDate.getMonth()
-    )} ${jsDate.getDate()}, ${jsDate.getFullYear()}`;
-  }
+/**
+ * this method return date format (Month Date, Year)
+ * @param {string} isoDateString
+ * @returns
+ */
+export const getFormattedDate = (isoDateString) => {
+  const jsDate = new Date(isoDateString);
+  return `${getMonthDayForMonthInteger(
+    jsDate.getMonth()
+  )} ${jsDate.getDate()}, ${jsDate.getFullYear()}`;
+};
 
-  /**
-   * this method return date format (Date-Month-Year)
-   * @param {string} isoDateString
-   * @returns
-   */
-  getFormattedDateDashes(isoDateString) {
-    const jsDate = new Date(isoDateString);
-    return `${jsDate.getDate()}-${jsDate.getMonth()}-${jsDate.getFullYear()}`;
-  }
-}
+/**
+ * this method return date format (Date-Month-Year)
+ * @param {string} isoDateString
+ * @returns
+ */
+export const getFormattedDateDashes = (isoDateString) => {
+  const jsDate = new Date(isoDateString);
+  return `${jsDate.getDate()}-${jsDate.getMonth()}-${jsDate.getFullYear()}`;
+};
 
-export class TransformationMethods {
-  /**
-   * Group By the values
-   * @param {string} xs
-   * @param {*} key
-   * @returns
-   */
-  groupBy = function (xs, key) {
-    return xs.reduce(function (rv, x) {
-      (rv[x[key]] = rv[x[key]] || []).push(x);
-      return rv;
-    }, {});
-  };
+/**
+ * Group By the values
+ * @param {string} xs
+ * @param {*} key
+ * @returns
+ */
+export const groupBy = (xs, key) => {
+  return xs.reduce(function (rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
 
-  /**
-   * this method returns the query string fron Object Fields
-   * @param {{object}} queryObject
-   * @returns
-   */
-  buildQueryStringFromObject(queryObject) {
-    let queryString = "";
-    for (const [key, value] of Object.entries(queryObject)) {
-      if (value.length > 0) {
-        queryString += `&${key}=${value}`;
-      }
+/**
+ * this method returns the query string fron Object Fields
+ * @param {{object}} queryObject
+ * @returns
+ */
+export const buildQueryStringFromObject = (queryObject) => {
+  let queryString = "";
+  for (const [key, value] of Object.entries(queryObject)) {
+    if (value.length > 0) {
+      queryString += `&${key}=${value}`;
     }
-    return queryString;
   }
+  return queryString;
+};
 
-  /**
-   * this method helps to capitalize first letter of a word
-   * @param {string} string string provided for Uppercase first letter
-   * @returns Capitalize First Letter word
-   */
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+/**
+ * this method helps to capitalize first letter of a word
+ * @param {string} string string provided for Uppercase first letter
+ * @returns Capitalize First Letter word
+ */
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+/**
+ * this function is used to populate a null entry in an array
+ * @param {object[]} SelectMenuArray Array of Object|String for populating a Select, List or Dropdown
+ * @returns Return the Array with the first item to be NULL
+ */
+export const initializeSelectMenuItems = (SelectMenuArray) => {
+  return [{ _id: "", name: "None" }, ...SelectMenuArray];
+};
+
+export const formatPhoneNumber = (phoneNumberString) => {
+  var cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+  var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return "(" + match[1] + ") " + match[2] + "-" + match[3];
   }
-
-  /**
-   * this function is used to populate a null entry in an array
-   * @param {object[]} SelectMenuArray Array of Object|String for populating a Select, List or Dropdown
-   * @returns Return the Array with the first item to be NULL
-   */
-  initializeSelectMenuItems(SelectMenuArray) {
-    return [{ _id: "", name: "None" }, ...SelectMenuArray];
-  }
-
-  formatPhoneNumber = (phoneNumberString) => {
-    var cleaned = ("" + phoneNumberString).replace(/\D/g, "");
-    var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      return "(" + match[1] + ") " + match[2] + "-" + match[3];
-    }
-    return null;
-  };
-}
+  return null;
+};

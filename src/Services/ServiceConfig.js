@@ -1,25 +1,36 @@
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL; // "http://18.223.23.61:5005/"; //process.env.REACT_APP_BASE_URL;
-// axios.defaults.headers.common[
-//   "Authorization"
-// ] = `Bearer  ${sessionStorage.getItem("Token360")};`;
-// "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjFkMDFiZmVmODYxMDAwMGM4MDAwNTM0IiwidXNlcm5hbWUiOiJzdWZpIiwiZGJOYW1lIjoiMzYwU29sdXRpb24ifSwiaWF0IjoxNjQxMDI4NjYyLCJleHAiOjE2NDExMTUwNjJ9.FK16maL_q_qzJNyKXmKxcBsai12ma0HBCHKIfB-p8mk";
-// sessionStorage.getItem("Token");
-axios.defaults.headers.post["Content-Type"] = "application/json";
-// axios.defaults.headers.post["Content-Type"] =
-//   "application/x-www-form-urlencoded";
-// axios.defaults.timeout = 60000;
+let store;
+export const reduxStoreInNonFunctionalFile = (_store) => {
+  store = _store;
+};
 
-axios.interceptors.request.use((value) => {
-  value.headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "*",
-    "Access-Control-Allow-Headers": "*",
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
-  return value;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL; //"http://18.223.23.61:5005/";
+
+axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.patch["Content-Type"] = "application/json";
+axios.defaults.headers.put["Content-Type"] = "application/json";
+axios.defaults.timeout = 60000;
+
+axios.interceptors.request.use((request) => {
+  const appData = store.getState().AppReducer;
+
+  // add auth header with jwt if account is logged in and request is to the api url
+  const token = localStorage.getItem("posToken");
+  const isApiUrl = request.url.startsWith(process.env.REACT_APP_API_URL);
+
+  if (token && isApiUrl) {
+    request.headers.common.Authorization = `Bearer ${account}`;
+    request.data = JSON.stringify({
+      ...request.data,
+      CompanyID: appData.companyId,
+      UserID: appData.userId,
+    });
+  }
+
+  console.log(request.data);
+
+  return request;
 });
 
 /**
