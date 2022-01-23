@@ -6,40 +6,70 @@ import {
   AppstoreFilled,
   SettingOutlined,
 } from "@ant-design/icons";
-// import { Link } from "react-router-dom";
 import SubMenu from "antd/lib/menu/SubMenu";
 import Sider from "antd/lib/layout/Sider";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 const SideMenu = ({ collapsed }) => {
+  const app = useSelector((state) => state.AppReducer);
+  let { menus } = app;
+
   return (
     <Sider theme="light" className="sidebar" collapsed={collapsed}>
       <Menu defaultSelectedKeys={["1"]} mode="inline" theme="light">
-        <Menu.Item key="1" icon={<AppstoreFilled />}>
-          <NavLink to="/dashboard">Dashboard</NavLink>
-        </Menu.Item>
+        {menus.map((menu) => {
+          if (
+            menu.isChild === "False" &&
+            menu.isParent === "False" &&
+            menu.parentId === ""
+          ) {
+            return (
+              <Menu.Item key={menu.menuId} icon={<AppstoreFilled />}>
+                <NavLink to={menu.menuUrl}>{menu.menuName}</NavLink>
+              </Menu.Item>
+            );
+          } else if (
+            menu.isChild === "False" &&
+            menu.isParent === "True" &&
+            menu.parentId === ""
+          ) {
+            return (
+              <SubMenu
+                key={menu.menuId}
+                icon={<ToolOutlined />}
+                title={menu.menuName}
+              >
+                {menus.map((menuChild) => {
+                  if (
+                    menuChild.isChild === "True" &&
+                    menuChild.isParent === "False" &&
+                    menuChild.parentId === menu.menuId
+                  ) {
+                    return (
+                      <Menu.Item
+                        key={menuChild.menuId}
+                        icon={<AppstoreFilled />}
+                      >
+                        <NavLink to={menuChild.menuUrl}>
+                          {menuChild.menuName}
+                        </NavLink>
+                      </Menu.Item>
+                    );
+                  }
+                })}
+              </SubMenu>
+            );
+          }
+        })}
+
         <Menu.Item key="2" icon={<LaptopOutlined />}>
           <NavLink to="/pos">P O S</NavLink>
         </Menu.Item>
         <SubMenu key="sub1" icon={<ToolOutlined />} title="Setups">
-          <Menu.Item key="3">
+          <Menu.Item key="abc">
             <NavLink to="/setup/users">Users</NavLink>
           </Menu.Item>
-          <Menu.Item key="4">
-            <NavLink to="/setup/roles">Roles</NavLink>
-          </Menu.Item>
-          <SubMenu key="sub1-2" title="Submenu">
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-          </SubMenu>
-        </SubMenu>
-        <SubMenu key="sub2" icon={<SettingOutlined />} title="Configuration">
-          <Menu.Item key="7">Roles</Menu.Item>
-          <Menu.Item key="8">
-            <NavLink to="/setup/users">Users</NavLink>
-          </Menu.Item>
-          <Menu.Item key="9">Roles Route Mapping</Menu.Item>
-          <Menu.Item key="10">Side Menu</Menu.Item>
         </SubMenu>
       </Menu>
     </Sider>
