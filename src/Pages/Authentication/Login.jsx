@@ -4,9 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./authentication.css";
 import { authRoute } from "../../Services/ServiceConfig";
+import { useDispatch } from "react-redux";
+import {
+  SET_APP_INFORMATION,
+  SET_APP_MENUS,
+} from "../../Redux/Actions/AppAction";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [data, setData] = useState({});
 
   const handleChange = (event) => {
@@ -15,11 +21,15 @@ const Login = () => {
 
   const submitLogin = () => {
     authRoute(data).then(
-      (success) => console.log(success),
+      (success) => {
+        let { loginDetails, menu, token } = success.data.Data;
+        dispatch(SET_APP_INFORMATION(loginDetails));
+        dispatch(SET_APP_MENUS(menu));
+        localStorage.setItem("posToken", token.tokenValue);
+        navigate("/dashboard");
+      },
       (error) => console.error(error)
     );
-    // localStorage.setItem("posToken", );
-    navigate("/dashboard");
   };
   return (
     <div className="login-container">

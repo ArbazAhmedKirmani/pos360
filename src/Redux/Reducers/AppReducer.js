@@ -1,7 +1,8 @@
-import { SET_APP_INFO } from "../Constants";
+import { SET_APP_INFO, SET_MENUS } from "../Constants";
 
 const initialState = {
-  inputState: { name: null, value: null },
+  loginDetails: {},
+  menus: [],
 };
 
 const AppReducer = (state = initialState, action) => {
@@ -9,7 +10,12 @@ const AppReducer = (state = initialState, action) => {
     case SET_APP_INFO:
       return {
         ...state,
-        inputState: action.payload,
+        loginDetails: action.payload,
+      };
+    case SET_MENUS:
+      return {
+        ...state,
+        menus: action.payload,
       };
     default:
       return state;
