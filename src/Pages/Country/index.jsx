@@ -10,7 +10,7 @@ const columnNames = [
 ];
 
 const Country = () => {
-  return <TableView columns={columnNames} />;
+  return <TableView columns={columnNames} bulkForm={true} />;
 };
 
 export default Country;
