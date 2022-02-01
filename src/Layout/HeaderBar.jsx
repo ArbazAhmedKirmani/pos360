@@ -30,8 +30,8 @@ const HeaderBar = (props) => {
 
   const logout = () => {
     localStorage.removeItem("posToken");
-    sessionStorage.removeItem("posLoginDetail");
-    sessionStorage.removeItem("posMenu");
+    localStorage.removeItem("posLoginDetail");
+    localStorage.removeItem("posMenu");
     navigate("/login");
   };
 
@@ -52,16 +52,16 @@ const HeaderBar = (props) => {
   return (
     <Row>
       <Col span={8}>
-        {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+        {/* {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
           className: "trigger",
           onClick: () => toggleSidebar(),
-        })}
-        {/* <img src={whiteLogo} alt="logo" style={{ height: 15, width: "auto" }} /> */}
+        })} */}
+        <h3>{AppReducer.loginDetails.companyName}</h3>
       </Col>
       <Col span={16}>
         <Row style={{ flexDirection: "row-reverse" }}>
           <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
-            <Button type="text" style={{ margin: "10px 0" }}>
+            <Button type="text" style={{ margin: "12px 0" }}>
               <MoreOutlined style={{ color: "white", fontSize: 26 }} />
             </Button>
           </Dropdown>
@@ -72,7 +72,7 @@ const HeaderBar = (props) => {
               <Indicator tooltip="Offline" color="red" />
             )}
           </div>
-          <h4 style={{ color: "white" }}>{AppReducer.loginDetails.fullName}</h4>
+          <p style={{ color: "white" }}>{AppReducer.loginDetails.fullName}</p>
         </Row>
       </Col>
     </Row>

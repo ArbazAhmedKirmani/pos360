@@ -15,15 +15,15 @@ const MainLayout = () => {
 
   return (
     <Layout className="layout">
-      <Header className="header site-layout-background">
-        <HeaderBar collapsed={collapsed} toggleSidebar={toggleSidebar} />
-      </Header>
-      <div style={{ display: "flex" }}>
-        <SideMenu collapsed={collapsed} />
+      <SideMenu collapsed={collapsed} onCollapse={toggleSidebar} />
+      <Layout>
+        <Header className="header">
+          <HeaderBar collapsed={collapsed} toggleSidebar={toggleSidebar} />
+        </Header>
         <Layout>
           <MainContent />
         </Layout>
-      </div>
+      </Layout>
     </Layout>
   );
 };

@@ -1,5 +1,7 @@
 .layout {
   height: 100vh;
+  display: flex;
+  flex-direction: row;
 }
 .header {
   padding: 0 30px;
@@ -9,8 +11,8 @@
 }
 .sidebar {
   overflow: auto;
-  /* height: 100vh; */
-  position: 'fixed';
+  height: '100vh';
+  position: 'fixed' !important;
   left: 0
 }
 .trigger{

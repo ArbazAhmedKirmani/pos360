@@ -27,15 +27,17 @@ export const getTableColumnWithSorting = (
     data = {
       title: "Actions",
       dataIndex: "action",
-      key: "xyz",
-      render: (record, index) => (
-        <TableLastItem
-          deleteFunction={deleteFunction}
-          editFunction={editFunction}
-          record={record}
-          index={index}
-        />
-      ),
+      key: "action",
+      render: (index, record) => {
+        return (
+          <TableLastItem
+            key={index}
+            deleteFunction={() => deleteFunction(record)}
+            editFunction={() => editFunction(record)}
+            record={record}
+          />
+        );
+      },
     };
     array.push(data);
   }

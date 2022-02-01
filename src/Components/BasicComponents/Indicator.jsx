@@ -12,7 +12,7 @@ const Indicator = (props) => {
           width: 18,
           borderRadius: 5,
           background: color,
-          margin: 20,
+          margin: "22px 15px",
         }}
       ></div>
     </Tooltip>

@@ -8,7 +8,6 @@ import {
   getKeysAttached,
   getSelectArrayList,
 } from "../../../Functions/ComponentFunctions/FormMethods";
-import useInputField from "../../../Hooks/useInputField";
 import { buildQueryStringFromObject } from "../../../Functions/commonFunctions";
 import { getSearchedData } from "../../../Services/user.service";
 
@@ -49,11 +48,8 @@ const columnNames = [
 const Users = () => {
   const [dataRows, setDataRows] = useState([]);
   const [statusList, setStatusList] = useState([]);
-  // const [searchItems, setSearchItems] = useState({});
+  const [searchItems, setSearchItems] = useState({});
   let search = {};
-  let form = {};
-
-  const { ...searchFields } = useInputField();
 
   useEffect(async () => {
     function getRecords() {

@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import MainLayout from "../Layout";
 import Login from "../Pages/Authentication/Login";
+import Company from "../Pages/Company";
 import Country from "../Pages/Country";
 import Dashboard from "../Pages/Dashboard";
 import NotFound404 from "../Pages/Errors/NotFound404";
@@ -35,6 +36,7 @@ const AppRoutes = () => {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="setup">
           <Route path="country" element={<Country />} />
+          <Route path="company" element={<Company />} />
           <Route path="users" element={<Users />} />
           <Route path="roles" element={<Roles />} />
         </Route>
