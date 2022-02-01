@@ -17,6 +17,7 @@ const FormInput = (props) => {
     type,
     className,
     size,
+    value,
     required,
   } = props;
 
@@ -46,7 +47,7 @@ const FormInput = (props) => {
         className={className}
         name={name}
         placeholder={placeholder}
-        value={input}
+        value={value}
         onChange={handleChange}
         type={type}
         size={size}

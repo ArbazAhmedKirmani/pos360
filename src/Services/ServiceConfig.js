@@ -1,3 +1,4 @@
+import { Alert } from "antd";
 import axios from "axios";
 
 let store;
@@ -10,6 +11,7 @@ axios.defaults.baseURL = process.env.REACT_APP_BASE_URL; //"http://18.223.23.61:
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.patch["Content-Type"] = "application/json";
 axios.defaults.headers.put["Content-Type"] = "application/json";
+axios.defaults.headers.common = "Access-Control-Allow-Origin";
 axios.defaults.timeout = 60000;
 
 axios.interceptors.request.use((request) => {
@@ -100,4 +102,14 @@ export const getByQueryString = async (queryString, populateFields, sort) => {
   if (populateFields) customerUrl += `?populate=${populateFields}`;
   if (sort) customerUrl += populateFields ? `&sort=${sort}` : `?sort=${sort}`;
   return await axios.get(customerUrl);
+};
+
+// CRUD REQUEST
+export const getAll = async (url, query) => {
+  return await axios.get(url);
+};
+
+export const deleteRecord = (url, data) => {
+  data.IsActive = false;
+  return axios.post(url, data);
 };

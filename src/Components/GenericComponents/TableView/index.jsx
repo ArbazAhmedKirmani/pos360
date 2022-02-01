@@ -32,22 +32,24 @@ const TableView = (props) => {
     bulkCreateDrawerWidth, // Drawer width for Bulk Create Form
     onCreateSubmit, // Create Form Submit Function
     onUpdateSubmit, // Update Form Submit Function
+    onSearchSubmit, // Search Submit Function
+    formLoading, // Form Loading state
+    resetState, // main state function
   } = props;
 
   const [visible, setVisible] = useState(false);
   const [bulkVisible, setBulkVisible] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [columnList, setColumnList] = useState([]);
-  const [searchFields, setSearchFields] = useState({});
 
-  const editRow = (record, index) => {
+  const editRow = (record) => {
     setUpdating(true);
     setVisible(!visible);
-    editRowFunction(record, index);
+    editRowFunction(record);
   };
 
-  const deleteRow = (record, index) => {
-    deleteRowFunction(record, index);
+  const deleteRow = (record) => {
+    deleteRowFunction(record);
   };
 
   useEffect(() => {
@@ -58,6 +60,7 @@ const TableView = (props) => {
   const toggleDrawer = () => {
     setVisible(!visible);
     setUpdating(false);
+    resetState();
   };
 
   const toggleBulkDrawer = () => {
@@ -65,7 +68,6 @@ const TableView = (props) => {
   };
 
   const onSubmit = () => {
-    console.log(searchFields);
     if (updating) {
       onUpdateSubmit();
     } else {
@@ -73,7 +75,10 @@ const TableView = (props) => {
     }
   };
 
-  const onBulkSubmit = () => {};
+  const onBulkSubmit = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
 
   return (
     <Fragment>
@@ -87,7 +92,10 @@ const TableView = (props) => {
             paddingBottom: 10,
           }}
         >
-          {searchSpace}
+          <form onSubmit={onSearchSubmit}>
+            {searchSpace}
+            <Button htmlType="submit">Search Submit</Button>
+          </form>
         </Row>
       )}
       <div style={{ display: "flex" }}>{children}</div>
@@ -133,7 +141,7 @@ const TableView = (props) => {
           showTotal: (total, range) =>
             `${range[0]}-${range[1]} of ${total} items`,
           defaultPageSize: 20,
-          responsive: ["xxl", "xl", "lg", "md"],
+          responsive: ["xxl", "xl", "lg", "md", "sm"],
         }}
       />
 
@@ -142,6 +150,7 @@ const TableView = (props) => {
 
       {/* Create Update Form */}
       <CreateUpdateForm
+        loading={formLoading}
         isUpdate={updating}
         placement="right"
         onClose={toggleDrawer}
@@ -154,6 +163,7 @@ const TableView = (props) => {
 
       {/* Create Update Form */}
       <CreateUpdateForm
+        loading={formLoading}
         placement="bottom"
         onClose={toggleBulkDrawer}
         visible={bulkVisible}
@@ -182,6 +192,7 @@ TableView.propTypes = {
   tableLoading: PropTypes.bool,
   createUpdateDrawerWidth: PropTypes.string,
   bulkCreateDrawerWidth: PropTypes.string,
+  formLoading: PropTypes.bool,
 };
 
 export default TableView;
