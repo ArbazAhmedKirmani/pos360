@@ -2,13 +2,23 @@ import React, { Fragment, useEffect, useState } from "react";
 import DropUploadFilePicker from "../../Components/BasicComponents/DropUploadFilePicker";
 import FormTextField from "../../Components/BasicComponents/FormTextField";
 import TableView from "../../Components/GenericComponents/TableView";
-import { getAll } from "../../Services/ServiceConfig";
+import { getAll, postRecord } from "../../Services/ServiceConfig";
 
 const columnNames = [
   {
     title: "Company",
     dataIndex: "CompanyName",
-    key: "countryName",
+    key: "CompanyName",
+  },
+  {
+    title: "Total Branches",
+    dataIndex: "TotalBranches",
+    key: "TotalBranches",
+  },
+  {
+    title: "No. of Terminals",
+    dataIndex: "NoOfTerminals",
+    key: "NoOfTerminals",
   },
 ];
 
@@ -47,10 +57,10 @@ const Company = () => {
     console.log(company);
   };
 
-  const deleteRecord = (record) => {
+  const deleteRecord = async (record) => {
     toggleLoading("list", true);
     record.IsActive = false;
-    deleteRecord("Company", record).then((response) => {
+    await deleteRecord("Company", record).then((response) => {
       if (response.statusText !== "OK") {
         return;
       }
@@ -75,11 +85,19 @@ const Company = () => {
   }, []);
 
   const handleInputChange = (input) => {
-    setData({ ...data, [input.name]: input.value });
+    setCompany({ ...company, [input.name]: input.value });
   };
 
-  const handleCreateSubmit = () => {
-    setLoading(true);
+  const handleCreateSubmit = async () => {
+    company.IsActive = true;
+    toggleLoading("form", true);
+    await postRecord("Company", company).then((response) => {
+      if (response.statusText === "OK") {
+        return;
+      }
+      getLatestRecord();
+      toggleLoading("form", false);
+    });
   };
 
   const resetState = () => {

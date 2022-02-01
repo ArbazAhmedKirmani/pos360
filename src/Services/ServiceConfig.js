@@ -109,6 +109,10 @@ export const getAll = async (url, query) => {
   return await axios.get(url);
 };
 
+export const postRecord = (url, data) => {
+  return axios.post(url, data);
+};
+
 export const deleteRecord = (url, data) => {
   data.IsActive = false;
   return axios.post(url, data);
