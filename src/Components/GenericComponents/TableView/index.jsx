@@ -67,7 +67,8 @@ const TableView = (props) => {
     setBulkVisible(!bulkVisible);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     if (updating) {
       onUpdateSubmit();
     } else {

@@ -6,6 +6,7 @@ import React from "react";
 const FormTextField = (props) => {
   let {
     span,
+    name,
     label,
     placeholder,
     size,
@@ -17,7 +18,7 @@ const FormTextField = (props) => {
   } = props;
 
   const handleChange = (event) => {
-    onChange({ name: event.target.name, value: event.target.value.trim() });
+    onChange({ name: event.target.name, value: event.target.value });
   };
 
   return (
@@ -30,6 +31,7 @@ const FormTextField = (props) => {
     >
       <span style={{ fontSize: 13, letterSpacing: 1 }}>{label}</span>
       <Input
+        name={name}
         placeholder={placeholder}
         size={size}
         type={type}
@@ -52,6 +54,7 @@ FormTextField.propTypes = {
   required: bool,
   type: string,
   disabled: bool,
+  name: string,
 };
 
 export default FormTextField;
