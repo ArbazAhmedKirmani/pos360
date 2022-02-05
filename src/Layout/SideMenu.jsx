@@ -2,7 +2,7 @@ import React from "react";
 import { Menu } from "antd";
 import {
   ToolOutlined,
-  LaptopOutlined,
+  CaretRightOutlined,
   AppstoreFilled,
 } from "@ant-design/icons";
 import SubMenu from "antd/lib/menu/SubMenu";
@@ -82,7 +82,10 @@ const SideMenu = ({ collapsed, onCollapse }) => {
                       menuChild.parentId === menu.menuId
                     ) {
                       return (
-                        <Menu.Item key={childIndex} icon={<AppstoreFilled />}>
+                        <Menu.Item
+                          key={childIndex}
+                          icon={<CaretRightOutlined />}
+                        >
                           <NavLink to={menuChild.menuUrl}>
                             {menuChild.menuName}
                           </NavLink>
