@@ -6,13 +6,16 @@ import {
   putRecord,
 } from "./ServiceConfig";
 
-export const getAllData = (url) => {
+export const getAllData = (url, toggle) => {
   return new Promise(async (resolve, reject) => {
     await getAll(url).then(
       (success) => {
+        console.log(success);
+        toggle();
         resolve(success.data.Data);
       },
       (error) => {
+        toggle();
         reject(error);
       }
     );

@@ -77,6 +77,23 @@ export const getKeysAttached = (array) => {
   return arr;
 };
 
+/**
+ *
+ * @param {Object} searchObject Object of search field
+ * @returns {String} Search String
+ */
+export const getSearchString = (searchObject) => {
+  let nameArray = Object.keys(searchObject);
+  let mainArray = [];
+  nameArray.forEach(
+    (name) =>
+      searchObject[name] &&
+      searchObject[name] != "" &&
+      mainArray.push(`${name}=${searchObject[name]}`)
+  );
+  return mainArray.join("&");
+};
+
 export const DeleteIconButton = (props) => {
   let { editFunction, deleteFunction, record, index, style } = props;
   const [isDelete, setIsDelete] = useState(false);

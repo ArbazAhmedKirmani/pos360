@@ -5,42 +5,45 @@ export const reduxStoreInNonFunctionalFile = (_store) => {
   store = _store;
 };
 
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL; //"http://18.223.23.61:5005/";
-
-axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 // axios.defaults.headers.patch["Content-Type"] = "application/json";
+axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.put["Content-Type"] = "application/json";
 axios.defaults.headers.common = "Access-Control-Allow-Origin";
-axios.defaults.timeout = 60000;
+axios.defaults.timeout = 10000;
 
 axios.interceptors.request.use((request) => {
   const appData = store.getState().AppReducer.loginDetails;
+
   // add auth header with jwt if account is logged in and request is to the api url
   const token = localStorage.getItem("posToken");
   // const isApiUrl = request.url.startsWith(process.env.REACT_APP_API_URL);
 
   if (token) {
     axios.defaults.headers = { Authorization: `Bearer ${token}` };
-    // axios.headers.common["Authorization"] = `Bearer ${token}`;
-    // if (request.method !== "get") {
-    //   request.data = {
-    //     data: {
-    //       Data: [
-    //         {
-    //           ...request.data.Data[0],
-    //           CompanyId: appData.companyId,
-    //           UserId: appData.userId,
-    //         },
-    //       ],
-    //     },
-    //   };
-    // } else {
-    //   request.data.Data[0] = JSON.stringify({
-    //     ...request.data.Data[0],
-    //     CompanyId: appData.companyId,
-    //     UserId: appData.userId,
-    //   });
-    // }
+    if (request.method === "get") {
+      let data = {
+        Data: [
+          {
+            CompanyId: appData.companyId,
+            UserId: appData.userId,
+          },
+        ],
+      };
+      request.data = data;
+    }
+    if (request.method === "post" || request.method === "put") {
+      let data = {
+        Data: [
+          {
+            ...request.data.Data[0],
+            CompanyId: appData.companyId,
+            UserId: appData.userId,
+          },
+        ],
+      };
+      request.data = data;
+    }
   }
   console.log(request.data);
   return request;
@@ -117,6 +120,8 @@ export const getByQueryString = async (queryString, populateFields, sort) => {
   if (sort) customerUrl += populateFields ? `&sort=${sort}` : `?sort=${sort}`;
   return await axios.get(customerUrl);
 };
+
+// ********** | ==================================================================================================================================================== | ********** //
 
 // CRUD REQUEST
 export const getAll = async (url) => {

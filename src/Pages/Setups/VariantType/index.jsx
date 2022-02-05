@@ -1,18 +1,17 @@
 import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFormList from "../../../Hooks/useFormList";
-import FormInput from "../../../Components/FormComponents/FormInput";
 import { SET_FORM_FIELD_ACTION } from "../../../Redux/Actions/PageAction";
 
 const columnNames = [
   {
-    title: "Country",
-    dataIndex: "CountryName",
-    key: "CountryName",
+    title: "Variant Type Name",
+    dataIndex: "VariantTypeName",
+    key: "VariantTypeName",
   },
 ];
 
-const Country = () => {
+const VariantType = () => {
   const { formFields } = useSelector((state) => state.PageReducer);
   const dispatch = useDispatch();
 
@@ -25,39 +24,19 @@ const Country = () => {
     });
   };
 
+  const searchSpace = <Fragment></Fragment>;
+
   const handleFormFields = (event) => {
     dispatch(SET_FORM_FIELD_ACTION(event));
   };
 
-  const searchSpace = (
-    <Fragment>
-      <FormInput
-        name="CountryName"
-        label="Country Name"
-        placeholder="Country Name"
-        value={searchObject.CountryName}
-        onChange={handleSearchField}
-      />
-    </Fragment>
-  );
-
-  const createForm = (
-    <Fragment>
-      <FormInput
-        name="CountryName"
-        label="Country Name"
-        placeholder="Country Name"
-        value={formFields.CountryName}
-        onChange={handleFormFields}
-      />
-    </Fragment>
-  );
+  const createForm = <Fragment></Fragment>;
 
   const { Component } = useFormList(
-    "Country",
+    "VariantType",
     searchSpace,
     createForm,
-    "CountryId",
+    "VariantTypeId",
     columnNames,
     "small",
     searchObject
@@ -66,4 +45,4 @@ const Country = () => {
   return <div>{Component}</div>;
 };
 
-export default Country;
+export default VariantType;

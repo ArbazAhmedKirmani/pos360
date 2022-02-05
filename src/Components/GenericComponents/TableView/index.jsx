@@ -127,7 +127,9 @@ const TableView = (props) => {
             }}
           >
             {searchSpace}
-            <Button htmlType="submit">Search Submit</Button>
+            <Button htmlType="submit" type="primary">
+              Search Submit
+            </Button>
           </Row>
         </form>
       )}

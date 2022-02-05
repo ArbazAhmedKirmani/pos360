@@ -56,7 +56,9 @@ const HeaderBar = (props) => {
           className: "trigger",
           onClick: () => toggleSidebar(),
         })} */}
-        <h3>{AppReducer.loginDetails.companyName}</h3>
+        <h3 style={{ color: "white" }}>
+          {AppReducer.loginDetails.companyName}
+        </h3>
       </Col>
       <Col span={16}>
         <Row style={{ flexDirection: "row-reverse" }}>
