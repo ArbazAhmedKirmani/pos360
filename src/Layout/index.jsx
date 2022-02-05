@@ -8,7 +8,7 @@ import { Content, Footer, Header } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
 
 const MainLayout = () => {
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
