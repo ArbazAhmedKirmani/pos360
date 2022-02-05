@@ -84,7 +84,7 @@ const SideMenu = ({ collapsed, onCollapse }) => {
                       return (
                         <Menu.Item key={childIndex} icon={<AppstoreFilled />}>
                           <NavLink to={menuChild.menuUrl}>
-                            {collapsed === false && menuChild.menuName}
+                            {menuChild.menuName}
                           </NavLink>
                         </Menu.Item>
                       );
