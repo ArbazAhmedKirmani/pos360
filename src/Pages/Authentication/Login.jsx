@@ -9,7 +9,7 @@ import {
   SET_APP_INFORMATION,
   SET_APP_MENUS,
 } from "../../Redux/Actions/AppAction";
-import { openLinkedMessage } from "../../Components/Messages";
+import { showLinkedMessage } from "../../Components/Messages";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const Login = () => {
 
   const submitLogin = () => {
     setIsLoading(!isLoading);
-    openLinkedMessage("loading", "Signing In", "signin");
+    showLinkedMessage("loading", "Signing In", "signin");
     authRoute(data).then(
       (success) => {
         let { loginDetails, menu, token } = success.data.Data;
@@ -32,9 +32,9 @@ const Login = () => {
         localStorage.setItem("posLoginDetail", JSON.stringify(loginDetails));
         localStorage.setItem("posMenu", JSON.stringify(menu));
         localStorage.setItem("posToken", token.tokenValue);
-        navigate("/dashboard");
         setIsLoading(!isLoading);
-        openLinkedMessage("success", "SignIn Successful", "signin");
+        showLinkedMessage("success", "SignIn Successful", "signin");
+        navigate("/dashboard");
       },
       (error) => {
         console.error(error);

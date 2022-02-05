@@ -14,13 +14,10 @@ const FormSelect = (props) => {
     disabled, // Disable the component
     size, // Size of the component
     placeholder, // Placeholder for COmponent
-    name,
+    name, // name of component
   } = props;
 
-  const [input, setInput] = useState(null);
-
   const handleChange = (value, name) => {
-    setInput(value);
     return onChange({ name, value });
   };
 
@@ -30,7 +27,7 @@ const FormSelect = (props) => {
       lg={span}
       md={span * 0.75}
       sm={span / 2}
-      style={{ padding: 3 }}
+      style={{ padding: 3, marginTop: 15 }}
     >
       <span
         style={{

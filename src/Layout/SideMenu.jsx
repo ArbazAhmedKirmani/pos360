@@ -46,7 +46,11 @@ const SideMenu = ({ collapsed, onCollapse }) => {
         />
       </div>
       <div>
-        <Menu defaultSelectedKeys={["1"]} mode="inline" theme="dark">
+        <Menu
+          defaultSelectedKeys={["1"]}
+          mode={collapsed === false ? "inline" : "vertical"}
+          theme="dark"
+        >
           {menus.map((menu, index) => {
             if (
               menu.isChild === "False" &&
@@ -55,7 +59,9 @@ const SideMenu = ({ collapsed, onCollapse }) => {
             ) {
               return (
                 <Menu.Item key={index} icon={<AppstoreFilled />}>
-                  <NavLink to={menu.menuUrl}>{menu.menuName}</NavLink>
+                  <NavLink to={menu.menuUrl}>
+                    {collapsed === false && menu.menuName}
+                  </NavLink>
                 </Menu.Item>
               );
             } else if (
@@ -67,7 +73,7 @@ const SideMenu = ({ collapsed, onCollapse }) => {
                 <SubMenu
                   key={index}
                   icon={<ToolOutlined />}
-                  title={menu.menuName}
+                  title={collapsed === false && menu.menuName}
                 >
                   {menus.map((menuChild, childIndex) => {
                     if (
@@ -78,7 +84,7 @@ const SideMenu = ({ collapsed, onCollapse }) => {
                       return (
                         <Menu.Item key={childIndex} icon={<AppstoreFilled />}>
                           <NavLink to={menuChild.menuUrl}>
-                            {menuChild.menuName}
+                            {!collapsed === false && menuChild.menuName}
                           </NavLink>
                         </Menu.Item>
                       );
@@ -88,10 +94,6 @@ const SideMenu = ({ collapsed, onCollapse }) => {
               );
             }
           })}
-
-          <Menu.Item key="cbf" icon={<LaptopOutlined />}>
-            <NavLink to="/pos">P O S</NavLink>
-          </Menu.Item>
         </Menu>
       </div>
     </Sider>

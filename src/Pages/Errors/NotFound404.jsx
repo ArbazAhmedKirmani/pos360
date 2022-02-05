@@ -22,7 +22,7 @@ const NotFound404 = () => {
         <ArrowLeftOutlined />
       </Button>
       <h1>404 Not Found</h1>
-      <h3>This error may occured because we don't find the URL is not found</h3>
+      <h2>Sorry! This URL doesn't exist :( </h2>
     </div>
   );
 };

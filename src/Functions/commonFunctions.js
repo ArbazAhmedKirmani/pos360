@@ -105,8 +105,8 @@ export const capitalizeFirstLetter = (string) => {
  * @param {object[]} SelectMenuArray Array of Object|String for populating a Select, List or Dropdown
  * @returns Return the Array with the first item to be NULL
  */
-export const initializeSelectMenuItems = (SelectMenuArray) => {
-  return [{ _id: "", name: "None" }, ...SelectMenuArray];
+export const initializeNoneInSelectListArray = (SelectMenuArray) => {
+  return [{ id: "", name: "None" }, ...SelectMenuArray];
 };
 
 export const formatPhoneNumber = (phoneNumberString) => {
@@ -116,4 +116,21 @@ export const formatPhoneNumber = (phoneNumberString) => {
     return "(" + match[1] + ") " + match[2] + "-" + match[3];
   }
   return null;
+};
+
+/**
+ *
+ * @param {Object} searchObject Object of search field
+ * @returns {String} Search String
+ */
+export const getSearchString = (searchObject) => {
+  let nameArray = Object.keys(searchObject);
+  let mainArray = [];
+  nameArray.forEach(
+    (name) =>
+      searchObject[name] &&
+      searchObject[name] != "" &&
+      mainArray.push(`${name}=${searchObject[name]}`)
+  );
+  return mainArray.join("&");
 };
