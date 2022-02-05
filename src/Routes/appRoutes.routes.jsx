@@ -6,6 +6,8 @@ import Company from "../Pages/Setups/Company";
 import Country from "../Pages/Setups/Country";
 import Dashboard from "../Pages/Dashboard";
 import NotFound404 from "../Pages/Errors/NotFound404";
+import Variants from "../Pages/Setups/Variants";
+import VariantType from "../Pages/Setups/VariantType";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -34,6 +36,8 @@ const AppRoutes = () => {
         <Route path="setup">
           <Route path="country" element={<Country />} />
           <Route path="company" element={<Company />} />
+          <Route path="variant" element={<Variants />} />
+          <Route path="variantType" element={<VariantType />} />
         </Route>
       </Route>
       <Route path="/pos" element={<NotFound404 />} />

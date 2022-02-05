@@ -1,16 +1,13 @@
 import {
-  TOGGLE_FORM_LOADING,
-  TOGGLE_TABLE_LOADING,
   SET_DEFAULT_STATE,
   SET_FORM_FIELD,
   SET_BULK_FORM_FIELD,
   SET_LIST,
   SET_FORM_FIELD_UPDATE,
+  SET_SEARCH_STRING,
 } from "../Constants";
 
 const initialState = {
-  tableLoading: false,
-  formLoading: false,
   list: [],
   searchString: "",
   formFields: {},
@@ -22,18 +19,10 @@ const PageReducer = (state = initialState, action) => {
     case SET_DEFAULT_STATE:
       return {
         ...state,
+        list: [],
+        searchString: "",
         formFields: {},
         bulkFormFields: [],
-      };
-    case TOGGLE_FORM_LOADING:
-      return {
-        ...state,
-        formLoading: !state.formLoading,
-      };
-    case TOGGLE_TABLE_LOADING:
-      return {
-        ...state,
-        tableLoading: !state.tableLoading,
       };
     case SET_LIST:
       return {
@@ -57,6 +46,11 @@ const PageReducer = (state = initialState, action) => {
       return {
         ...state,
         bulkFormFields: bulkFormFields.push(action.payload),
+      };
+    case SET_SEARCH_STRING:
+      return {
+        ...state,
+        searchString: action.payload,
       };
     default:
       return state;
