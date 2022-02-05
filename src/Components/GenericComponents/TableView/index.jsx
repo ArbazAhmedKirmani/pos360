@@ -2,13 +2,44 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Table, Button, Row } from "antd";
 import { FormOutlined } from "@ant-design/icons";
 import "./tableView.css";
-import PropTypes, { object } from "prop-types";
+import {
+  array,
+  arrayOf,
+  bool,
+  element,
+  func,
+  object,
+  string,
+} from "prop-types";
 import { getTableColumnWithSorting } from "../../../Functions/ComponentFunctions/FormMethods";
 import CreateUpdateForm from "./CreateUpdateForm";
 
 /**
  * This Component render the main window of page with a table view and Create / Update Form
- * @param {object} props props object {columns, rows, deleteRowFunction, editRowFunction, bulkCreate, footerComponent, children, buttonRightFlex,searchSpace, searchFunction, additionalSpace}
+ * @param {object} props
+ *  [columns] : Column Fields array of object
+ *  [rows] : Data Rows array of object
+ *  [deleteRowFunction] : function for deleting the row
+ *  [editRowFunction] : function for editing the row
+ *  [showCreateButton] :
+ *  [showBulkCreate] : show/hide bulk upload button
+ *  [footerComponent] : Space after Table
+ *  [children] : Space after Search Bar before Create Button
+ *  [buttonRightFlex] : Space to the right of the Create Button
+ *  [searchSpace] : Space before Search Bar
+ *  [additionalSpace] : Space before Table and after Create Button
+ *  [createFormField] : Creation Form
+ *  [updateFormField] : Updation Form
+ *  [bulkFormField] : Bulk Creation Form
+ *  [tableSize] : Size of the table
+ *  [tableLoading] : loading state of Table
+ *  [createUpdateDrawerWidth] : Drawer width of Create/Update Form
+ *  [bulkCreateDrawerWidth] : Drawer width for Bulk Create Form
+ *  [onCreateSubmit] : Create Form Submit Function
+ *  [onUpdateSubmit] : Update Form Submit Function
+ *  [onSearchSubmit] : Search Submit Function
+ *  [onBulkSubmit] : Search Submit Function
+ *  [formLoading] : Form Loading state
  * @returns
  */
 const TableView = (props) => {
@@ -17,15 +48,16 @@ const TableView = (props) => {
     rows, // Data Rows array of object
     deleteRowFunction, // function for deleting the row
     editRowFunction, // function for editing the row
-    bulkCreate, // show/hide bulk upload button
+    showCreateButton,
+    showBulkCreate, // show/hide bulk upload button
     footerComponent, // Space after Table
     children, // Space after Search Bar before Create Button
     buttonRightFlex, // Space to the right of the Create Button
     searchSpace, // Space before Search Bar
     additionalSpace, // Space before Table and after Create Button
-    createForm, // Creation Form
-    updateForm, // Updation Form
-    bulkForm, // Bulk Creation Form
+    createFormField, // Creation Form
+    updateFormField, // Updation Form
+    bulkFormField, // Bulk Creation Form
     tableSize, // Size of the table
     tableLoading, // loading state of Table
     createUpdateDrawerWidth, // Drawer width of Create/Update Form
@@ -33,8 +65,8 @@ const TableView = (props) => {
     onCreateSubmit, // Create Form Submit Function
     onUpdateSubmit, // Update Form Submit Function
     onSearchSubmit, // Search Submit Function
+    onBulkSubmit, // Bulk Form Submit Function
     formLoading, // Form Loading state
-    resetState, // main state function
   } = props;
 
   const [visible, setVisible] = useState(false);
@@ -43,9 +75,9 @@ const TableView = (props) => {
   const [columnList, setColumnList] = useState([]);
 
   const editRow = (record) => {
+    editRowFunction(record);
     setUpdating(true);
     setVisible(!visible);
-    editRowFunction(record);
   };
 
   const deleteRow = (record) => {
@@ -60,58 +92,61 @@ const TableView = (props) => {
   const toggleDrawer = () => {
     setVisible(!visible);
     setUpdating(false);
-    resetState();
   };
 
   const toggleBulkDrawer = () => {
     setBulkVisible(!bulkVisible);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (updating) {
-      onUpdateSubmit();
+      await onUpdateSubmit();
     } else {
-      onCreateSubmit();
+      await onCreateSubmit();
     }
+    toggleDrawer();
   };
 
-  const onBulkSubmit = (e) => {
+  const onBulkFormSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
+    onBulkSubmit();
   };
 
   return (
     <Fragment>
       {searchSpace && (
-        <Row
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
-            borderBottom: "0.5px solid #f1f1f1",
-            paddingBottom: 10,
-          }}
-        >
-          <form onSubmit={onSearchSubmit}>
+        <form onSubmit={onSearchSubmit}>
+          <Row
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              borderBottom: "0.5px solid #f1f1f1",
+              paddingBottom: 10,
+            }}
+          >
             {searchSpace}
             <Button htmlType="submit">Search Submit</Button>
-          </form>
-        </Row>
+          </Row>
+        </form>
       )}
       <div style={{ display: "flex" }}>{children}</div>
       <div style={{ display: "flex", justifyContent: "flex-start" }}>
         <div style={{ display: "flex", flex: 1, justifyContent: "flex-start" }}>
-          <Button
-            className="button"
-            type="primary"
-            size="default"
-            icon={<FormOutlined />}
-            onClick={toggleDrawer}
-          >
-            Create
-          </Button>
-          {bulkCreate && (
+          {showCreateButton && (
+            <Button
+              className="button"
+              type="primary"
+              size="default"
+              icon={<FormOutlined />}
+              onClick={toggleDrawer}
+            >
+              Create
+            </Button>
+          )}
+
+          {showBulkCreate && (
             <Button
               className="button"
               type="secondary"
@@ -159,7 +194,7 @@ const TableView = (props) => {
         width={createUpdateDrawerWidth}
         onSubmit={onSubmit}
       >
-        {updating ? updateForm : createForm}
+        {updating ? updateFormField : createFormField}
       </CreateUpdateForm>
 
       {/* Create Update Form */}
@@ -169,31 +204,38 @@ const TableView = (props) => {
         onClose={toggleBulkDrawer}
         visible={bulkVisible}
         height={bulkCreateDrawerWidth}
-        onSubmit={onBulkSubmit}
+        onSubmit={onBulkFormSubmit}
       >
-        {bulkForm}
+        {bulkFormField}
       </CreateUpdateForm>
     </Fragment>
   );
 };
 
 TableView.propTypes = {
-  columns: PropTypes.arrayOf(object),
-  rows: PropTypes.arrayOf(object),
-  deleteRowFunction: PropTypes.func,
-  editRowFunction: PropTypes.func,
-  bulkCreate: PropTypes.bool,
-  footerComponent: PropTypes.element,
-  children: PropTypes.element,
-  buttonRightFlex: PropTypes.element,
-  searchSpace: PropTypes.element,
-  additionalSpace: PropTypes.element,
-  bulkForm: PropTypes.element,
-  tableSize: PropTypes.string,
-  tableLoading: PropTypes.bool,
-  createUpdateDrawerWidth: PropTypes.string,
-  bulkCreateDrawerWidth: PropTypes.string,
-  formLoading: PropTypes.bool,
+  columns: array,
+  rows: array,
+  deleteRowFunction: func,
+  editRowFunction: func,
+  showCreateButton: bool,
+  showBulkCreate: bool,
+  footerComponent: element,
+  children: element,
+  buttonRightFlex: element,
+  searchSpace: element,
+  additionalSpace: element,
+  createFormField: element,
+  updateFormField: element,
+  bulkFormField: bool,
+  tableSize: string,
+  tableLoading: bool,
+  createUpdateDrawerWidth: string,
+  bulkCreateDrawerWidth: string,
+  onCreateSubmit: func,
+  onUpdateSubmit: func,
+  onSearchSubmit: func,
+  formLoading: bool,
+  onBulkSubmit: func,
 };
 
 export default TableView;

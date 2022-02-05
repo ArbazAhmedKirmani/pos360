@@ -33,7 +33,7 @@ const MainContent = () => {
           overflowY: "scroll",
         }}
       >
-        <Breadcrumb separator=">">
+        <Breadcrumb separator=">" style={{ marginBottom: 10 }}>
           {breadcrumbs.map((data, index) => {
             let name =
               index === 0 ? (

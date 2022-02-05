@@ -1,4 +1,3 @@
-import { Alert } from "antd";
 import axios from "axios";
 
 let store;
@@ -9,7 +8,7 @@ export const reduxStoreInNonFunctionalFile = (_store) => {
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL; //"http://18.223.23.61:5005/";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
-axios.defaults.headers.patch["Content-Type"] = "application/json";
+// axios.defaults.headers.patch["Content-Type"] = "application/json";
 axios.defaults.headers.put["Content-Type"] = "application/json";
 axios.defaults.headers.common = "Access-Control-Allow-Origin";
 axios.defaults.timeout = 60000;
@@ -18,15 +17,30 @@ axios.interceptors.request.use((request) => {
   const appData = store.getState().AppReducer.loginDetails;
   // add auth header with jwt if account is logged in and request is to the api url
   const token = localStorage.getItem("posToken");
-  const isApiUrl = request.url.startsWith(process.env.REACT_APP_API_URL);
+  // const isApiUrl = request.url.startsWith(process.env.REACT_APP_API_URL);
 
-  if (token && isApiUrl) {
-    request.headers.common.Authorization = `Bearer ${account}`;
-    request.data = JSON.stringify({
-      ...request.data,
-      companyId: appData.companyId,
-      userId: appData.userId,
-    });
+  if (token) {
+    axios.defaults.headers = { Authorization: `Bearer ${token}` };
+    // axios.headers.common["Authorization"] = `Bearer ${token}`;
+    // if (request.method !== "get") {
+    //   request.data = {
+    //     data: {
+    //       Data: [
+    //         {
+    //           ...request.data.Data[0],
+    //           CompanyId: appData.companyId,
+    //           UserId: appData.userId,
+    //         },
+    //       ],
+    //     },
+    //   };
+    // } else {
+    //   request.data.Data[0] = JSON.stringify({
+    //     ...request.data.Data[0],
+    //     CompanyId: appData.companyId,
+    //     UserId: appData.userId,
+    //   });
+    // }
   }
   console.log(request.data);
   return request;
@@ -105,7 +119,7 @@ export const getByQueryString = async (queryString, populateFields, sort) => {
 };
 
 // CRUD REQUEST
-export const getAll = async (url, query) => {
+export const getAll = async (url) => {
   return await axios.get(url);
 };
 
@@ -113,7 +127,11 @@ export const postRecord = (url, data) => {
   return axios.post(url, data);
 };
 
-export const deleteRecord = (url, data) => {
+export const putRecord = (url, data) => {
+  return axios.put(url, data);
+};
+
+export const deleteRecord = async (url, data) => {
   data.IsActive = false;
-  return axios.post(url, data);
+  return await axios.put(url, { Data: [data] });
 };

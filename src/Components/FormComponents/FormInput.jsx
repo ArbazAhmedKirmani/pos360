@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Input } from "antd";
 import PropTypes from "prop-types";
 
@@ -18,7 +18,9 @@ const FormInput = (props) => {
     className,
     size,
     value,
+    defaultValue,
     required,
+    disabled,
   } = props;
 
   const handleChange = (event) => {
@@ -38,7 +40,7 @@ const FormInput = (props) => {
         style={{
           position: "absolute",
           top: -18,
-          fontSize: 14,
+          fontSize: 13,
         }}
       >
         {label}
@@ -47,11 +49,13 @@ const FormInput = (props) => {
         className={className}
         name={name}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         value={value}
         onChange={handleChange}
         type={type}
         size={size}
         required={required}
+        disabled={disabled}
       />
     </Col>
   );
@@ -67,6 +71,9 @@ FormInput.propTypes = {
   className: PropTypes.string,
   size: PropTypes.string,
   required: PropTypes.bool,
+  disabled: PropTypes.bool,
+  defaultValue: PropTypes.any,
+  value: PropTypes.any,
 };
 
-export default React.memo(FormInput);
+export default FormInput;

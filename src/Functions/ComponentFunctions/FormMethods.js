@@ -30,8 +30,8 @@ export const getTableColumnWithSorting = (
       key: "action",
       render: (index, record) => {
         return (
-          <TableLastItem
-            key={index}
+          <DeleteIconButton
+            key={record + "-" + index}
             deleteFunction={() => deleteFunction(record)}
             editFunction={() => editFunction(record)}
             record={record}
@@ -47,11 +47,11 @@ export const getTableColumnWithSorting = (
 /**
  * this function helps you to get an array for Dropdown / Select Component
  * @param {Object[]} array
- * @param {string} keyID
- * @param {string} keyName
+ * @param {string} keyID value column name
+ * @param {string} keyName display column name
  * @returns Array of Objects with id and name fields
  */
-export const getSelectArrayList = (array, keyID, keyName) => {
+export const getSelectListArray = (array, keyID, keyName) => {
   let arr = [];
   if (typeof array[1] !== "object") return;
   array &&
@@ -63,6 +63,11 @@ export const getSelectArrayList = (array, keyID, keyName) => {
   return arr;
 };
 
+/**
+ * this function is used to have key field in every object of a list
+ * @param {[]]} array (array of objects) to include key field
+ * @returns
+ */
 export const getKeysAttached = (array) => {
   let arr = [];
   array.forEach((item, index) => {
@@ -72,8 +77,8 @@ export const getKeysAttached = (array) => {
   return arr;
 };
 
-export const TableLastItem = (props) => {
-  let { editFunction, deleteFunction, record, index } = props;
+export const DeleteIconButton = (props) => {
+  let { editFunction, deleteFunction, record, index, style } = props;
   const [isDelete, setIsDelete] = useState(false);
   const toggleDelete = () => {
     setIsDelete(!isDelete);
@@ -82,11 +87,14 @@ export const TableLastItem = (props) => {
     <Fragment>
       <Space size="large">
         <a onClick={() => editFunction(record, index)}>
-          <EditFilled style={{ fontSize: 16 }} />
+          <EditFilled style={style || { fontSize: 16 }} />
         </a>
         <Popconfirm
           title="Are you sure to delete this Row?"
-          onConfirm={() => deleteFunction(record, index)}
+          onConfirm={() => {
+            deleteFunction(record, index);
+            toggleDelete();
+          }}
           onCancel={toggleDelete}
           okText="Yes"
           cancelText="No"
