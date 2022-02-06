@@ -36,15 +36,13 @@ const FormInput = (props) => {
       sm={span + span / 2}
       style={{ padding: 3 }}
     >
-      <span
+      <label
         style={{
-          position: "absolute",
-          top: -18,
-          fontSize: 13,
+          fontSize: 12.5,
         }}
       >
         {label}
-      </span>
+      </label>
       <Input
         className={className}
         name={name}

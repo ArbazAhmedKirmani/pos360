@@ -127,7 +127,7 @@ const TableView = (props) => {
             }}
           >
             {searchSpace}
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit" type="primary" style={{ marginTop: 20 }}>
               Search Submit
             </Button>
           </Row>

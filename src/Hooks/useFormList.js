@@ -40,13 +40,49 @@ const useFormList = (
   tableSize,
   searchObject,
   formWidth,
+  queryCompany,
   bulkFormFields
 ) => {
+  const { loginDetails } = useSelector((state) => state.AppReducer);
   const { list, formFields } = useSelector((state) => state.PageReducer);
   const dispatch = useDispatch();
   const [formLoading, toggleFormLoading, stopFormLoading] = useLoading(false);
   const [tableLoading, toggleTableLoading, stopTableLoading] =
     useLoading(false);
+
+  const getEndpoint = (endpnt, type, data) => {
+    let endpointString = "";
+    if (queryCompany === true) {
+      switch (type) {
+        case "get":
+          return (endpointString = `${endpnt}?CompanyId=${loginDetails.companyId}`);
+        case "post":
+          return (endpointString = `${endpnt}?CompanyId=${loginDetails.companyId}`);
+        case "put":
+          if (data !== undefined)
+            return (endpointString = `${endpnt}/${data[IDkey]}?CompanyId=${loginDetails.companyId}`);
+        case "delete":
+          return (endpointString = `${endpnt}?CompanyId=${loginDetails.companyId}`);
+        default:
+          break;
+      }
+    } else {
+      switch (type) {
+        case "get":
+          return (endpointString = `${endpnt}`);
+        case "post":
+          return (endpointString = `${endpnt}`);
+        case "put":
+          if (data !== undefined)
+            return (endpointString = `${endpnt}/${data[IDkey]}`);
+        case "delete":
+          return (endpointString = `${endpnt}`);
+        default:
+          break;
+      }
+    }
+    // return endpointString
+  };
 
   /**
    * for getting latest endpoint List
@@ -55,7 +91,7 @@ const useFormList = (
   const getAllList = async (endpointString) => {
     try {
       toggleTableLoading();
-      await getAllData(endpointString, stopTableLoading)
+      await getAllData(getEndpoint(endpointString, "get"), stopTableLoading)
         .then((response) => {
           dispatch(SET_LIST_ACTION(getKeysAttached(response)));
         })
@@ -75,7 +111,11 @@ const useFormList = (
   const createFormSubmit = async () => {
     try {
       toggleFormLoading();
-      await createData(endpoint, formFields, stopFormLoading)
+      await createData(
+        getEndpoint(endpoint, "post"),
+        formFields,
+        stopFormLoading
+      )
         .then((response) => {
           getAllList(endpoint);
           dispatch(SET_DEFAULT_STATE_ACTION());
@@ -89,7 +129,11 @@ const useFormList = (
   const deleteListItem = async (record) => {
     try {
       toggleTableLoading();
-      await deleteData(endpoint, record, stopTableLoading).then((response) => {
+      await deleteData(
+        getEndpoint(endpoint, "put", record),
+        record,
+        stopTableLoading
+      ).then((response) => {
         getAllList(endpoint);
       });
     } catch (error) {
@@ -105,7 +149,7 @@ const useFormList = (
     try {
       toggleFormLoading();
       await updateData(
-        `${endpoint}/` + formFields[IDkey],
+        getEndpoint(endpoint, "put", formFields),
         formFields,
         stopFormLoading
       ).then((response) => {

@@ -27,17 +27,15 @@ const FormSelect = (props) => {
       lg={span}
       md={span * 0.75}
       sm={span / 2}
-      style={{ padding: 3, marginTop: 15 }}
+      style={{ padding: 3 }}
     >
-      <span
+      <label
         style={{
-          position: "absolute",
-          top: -18,
-          fontSize: 14,
+          fontSize: 12.5,
         }}
       >
         {label}
-      </span>
+      </label>
       <Select
         name={name}
         placeholder={placeholder}
@@ -67,12 +65,13 @@ FormSelect.propTypes = {
   span: PropTypes.number,
   defaultValue: PropTypes.string,
   loading: PropTypes.bool,
-  value: PropTypes.string,
+  value: PropTypes.any,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
   size: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default FormSelect;

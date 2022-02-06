@@ -6,8 +6,7 @@ import FormSelect from "../../../Components/FormComponents/FormSelect";
 import { getSelectListArray } from "../../../Functions/ComponentFunctions/FormMethods";
 import useFormList from "../../../Hooks/useFormList";
 import { SET_FORM_FIELD_ACTION } from "../../../Redux/Actions/PageAction";
-import { getAllData } from "../../../Services/generalService";
-import { getAll } from "../../../Services/ServiceConfig";
+import { getAllWithCompany } from "../../../Services/ServiceConfig";
 
 const columnNames = [
   {
@@ -35,7 +34,7 @@ const Company = () => {
   const [countryList, setCountryList] = useState([]);
 
   useEffect(() => {
-    getAll("Country").then((response) =>
+    getAllWithCompany("Country").then((response) =>
       setCountryList(
         getSelectListArray(response.data.Data, "CountryId", "CountryName")
       )
