@@ -181,6 +181,7 @@ const TableView = (props) => {
           defaultPageSize: 20,
           responsive: ["xxl", "xl", "lg", "md", "sm"],
         }}
+        scroll={{ x: 300 }}
       />
 
       {/* Footer Component to be rendered here... */}
