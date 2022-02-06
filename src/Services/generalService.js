@@ -23,10 +23,12 @@ export const getAllData = (url, toggle) => {
 };
 
 export const createData = (url, data, toggle) => {
+  data.IsActive = true;
   let dataObject = { Data: [data] };
   return new Promise(async (resolve, reject) => {
     await postRecord(url, dataObject).then(
       (response) => {
+        toggle();
         resolve(response.data);
         showLinkedMessage("success", "Document Successfully Created");
       },
@@ -39,10 +41,12 @@ export const createData = (url, data, toggle) => {
 };
 
 export const updateData = (url, data, toggle) => {
+  data.IsActive = true;
   let dataObject = { Data: [data] };
   return new Promise(async (resolve, reject) => {
     await putRecord(url, dataObject).then(
       (response) => {
+        toggle();
         resolve(response.data);
         showLinkedMessage("success", "Document Updated Successfully");
       },
@@ -54,16 +58,18 @@ export const updateData = (url, data, toggle) => {
   });
 };
 
-export const deleteData = (url, data) => {
+export const deleteData = (url, data, toggle) => {
   data.IsActive = false;
   let dataObject = { Data: [data] };
   return new Promise(async (resolve, reject) => {
     await putRecord(url, dataObject).then(
       (response) => {
+        toggle();
         resolve(response.data);
         showLinkedMessage("success", "Deleted Successfully");
       },
       (error) => {
+        toggle();
         reject(error);
       }
     );

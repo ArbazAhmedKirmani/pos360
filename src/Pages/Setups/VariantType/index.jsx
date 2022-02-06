@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import FormInput from "../../../Components/FormComponents/FormInput";
 import useFormList from "../../../Hooks/useFormList";
 import { SET_FORM_FIELD_ACTION } from "../../../Redux/Actions/PageAction";
 
@@ -24,13 +25,33 @@ const VariantType = () => {
     });
   };
 
-  const searchSpace = <Fragment></Fragment>;
+  const searchSpace = (
+    <Fragment>
+      <FormInput
+        name="VariantTypeName"
+        label="Variant Type Name"
+        required
+        value={searchObject.VariantTypeName}
+        onChange={handleSearchField}
+      />
+    </Fragment>
+  );
 
   const handleFormFields = (event) => {
     dispatch(SET_FORM_FIELD_ACTION(event));
   };
 
-  const createForm = <Fragment></Fragment>;
+  const createForm = (
+    <Fragment>
+      <FormInput
+        name="VariantTypeName"
+        label="Variant Type Name"
+        required
+        value={formFields.VariantTypeName}
+        onChange={handleFormFields}
+      />
+    </Fragment>
+  );
 
   const { Component } = useFormList(
     "VariantType",
@@ -39,7 +60,9 @@ const VariantType = () => {
     "VariantTypeId",
     columnNames,
     "small",
-    searchObject
+    searchObject,
+    "20vw",
+    true
   );
 
   return <div>{Component}</div>;

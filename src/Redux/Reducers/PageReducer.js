@@ -18,7 +18,6 @@ const PageReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_DEFAULT_STATE:
       return {
-        ...state,
         list: [],
         searchString: "",
         formFields: {},

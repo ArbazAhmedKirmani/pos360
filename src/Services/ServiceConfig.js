@@ -124,6 +124,9 @@ export const getByQueryString = async (queryString, populateFields, sort) => {
 // ********** | ==================================================================================================================================================== | ********** //
 
 // CRUD REQUEST
+export const getAllWithCompany = async (url, CompanyId) => {
+  return await axios.get(CompanyId ? url + "?CompanyId=" + CompanyId : url);
+};
 export const getAll = async (url) => {
   return await axios.get(url);
 };

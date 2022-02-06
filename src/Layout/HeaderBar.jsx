@@ -1,13 +1,12 @@
 import React, { createElement, useEffect, useState } from "react";
 import { Button, Col, Dropdown, Menu, Row } from "antd";
 import {
-  MenuUnfoldOutlined,
+  // MenuUnfoldOutlined,
   MoreOutlined,
   UserOutlined,
-  MenuFoldOutlined,
+  // MenuFoldOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-// import whiteLogo from "../assets/images/logo-white.png";
 import "./layout.css";
 import Indicator from "../Components/BasicComponents/Indicator";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +14,7 @@ import { useSelector } from "react-redux";
 
 const HeaderBar = (props) => {
   const navigate = useNavigate();
-  let { collapsed, toggleSidebar } = props;
+  // let { collapsed, toggleSidebar } = props;
   const [online, setOnline] = useState(true);
   const AppReducer = useSelector((state) => state.AppReducer);
 
@@ -56,15 +55,13 @@ const HeaderBar = (props) => {
           className: "trigger",
           onClick: () => toggleSidebar(),
         })} */}
-        <h3 style={{ color: "white" }}>
-          {AppReducer.loginDetails.companyName}
-        </h3>
+        <h3>{AppReducer.loginDetails.companyName}</h3>
       </Col>
       <Col span={16}>
         <Row style={{ flexDirection: "row-reverse" }}>
           <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
             <Button type="text" style={{ margin: "12px 0" }}>
-              <MoreOutlined style={{ color: "white", fontSize: 26 }} />
+              <MoreOutlined style={{ fontSize: 26 }} />
             </Button>
           </Dropdown>
           <div>
@@ -74,7 +71,7 @@ const HeaderBar = (props) => {
               <Indicator tooltip="Offline" color="red" />
             )}
           </div>
-          <p style={{ color: "white" }}>{AppReducer.loginDetails.fullName}</p>
+          <p style={{ color: "black" }}>{AppReducer.loginDetails.fullName}</p>
         </Row>
       </Col>
     </Row>
