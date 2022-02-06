@@ -27,6 +27,8 @@ export const getTableColumnWithSorting = (
     data = {
       title: "Actions",
       dataIndex: "action",
+      fixed: "right",
+      width: 100,
       key: "action",
       render: (index, record) => {
         return (
