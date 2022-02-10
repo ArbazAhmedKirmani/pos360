@@ -1,18 +1,5 @@
 import React, { lazy, Suspense } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-// import MainLayout from "../Layout";
-// import Login from "../Pages/Authentication/Login";
-// import Company from "../Pages/Setups/Company";
-// import Country from "../Pages/Setups/Country";
-// import Dashboard from "../Pages/Dashboard";
-// import NotFound404 from "../Pages/Errors/NotFound404";
-// import Variants from "../Pages/Setups/Variants";
-// import VariantType from "../Pages/Setups/VariantType";
-// import Category from "../Pages/Setups/Category";
-// import Department from "../Pages/Setups/Department";
-// import Area from "../Pages/Setups/Area";
-// import OrderType from "../Pages/Setups/OrderType";
-// import OrderGroup from "../Pages/Setups/OrderGroup";
 
 const MainLayout = lazy(() => import("../Layout"));
 const Login = lazy(() => import("../Pages/Authentication/Login"));
