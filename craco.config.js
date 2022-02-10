@@ -10,7 +10,8 @@ module.exports = {
           lessOptions: {
             modifyVars: {
               "@primary-color": constant.app_theme,
-              "@drawer-bg": constant.drawer_theme,
+              "@menu-dark-bg": constant.drawer_theme,
+              "@layout-header-background": constant.drawer_theme,
             },
             javascriptEnabled: true,
           },
